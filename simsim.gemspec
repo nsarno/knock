@@ -7,11 +7,11 @@ require "simsim/version"
 Gem::Specification.new do |s|
   s.name        = "simsim"
   s.version     = Simsim::VERSION
-  s.authors     = ["Arnaud MESUREUR"]
+  s.authors     = ["Arnaud MESUREUR", "Ghjuvan-Carlu BIANCHI"]
   s.email       = ["arnaud.mesureur@gmail.com"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of Simsim."
-  s.description = "TODO: Description of Simsim."
+  s.homepage    = "https://github.com/nsarno/simsim"
+  s.summary     = "Seamless JWT authentication for Rails API."
+  s.description = "Authentication solution for Rails based on JWT (http://jwt.io/)"
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
