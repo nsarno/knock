@@ -13,3 +13,4 @@ gemspec
 # To use a debugger
 # gem 'byebug', group: [:development, :test]
 
+gem "codeclimate-test-reporter", group: :test, require: nil
