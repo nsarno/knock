@@ -1,8 +1,7 @@
 module Authenticable
   include AuthToken
 
-  attr_accessor :current_user
-  attr_accessor :expiration_time
+  attr_reader :current_user
 
   def authenticate
     begin
@@ -12,9 +11,5 @@ module Authenticable
     rescue
       head :unauthorized
     end
-  end
-
-  def expiration_time
-    @expiration_time || 1.day
   end
 end

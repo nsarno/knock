@@ -2,9 +2,10 @@ require 'test_helper'
 
 class ProtectedResourcesControllerTest < ActionController::TestCase
 
-  setup do
+  def authenticate
     @user = users(:one)
     @token = @controller.issue_token({ user_id: @user.id })
+    @request.env['HTTP_AUTHORIZATION'] = "Bearer #{@token}"
   end
 
   test "responds with unauthorized" do
@@ -13,8 +14,15 @@ class ProtectedResourcesControllerTest < ActionController::TestCase
   end
 
   test "responds with success if authenticated" do
-    @request.env['HTTP_AUTHORIZATION'] = "Bearer #{@token}"
+    authenticate
     get :index
     assert_response :success
+  end
+
+  test "has a current_user after authentication" do
+    authenticate
+    get :index
+    assert_response :success
+    assert @controller.current_user.id == @user.id
   end
 end
