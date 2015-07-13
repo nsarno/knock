@@ -14,7 +14,11 @@ module Simsim
     end
 
     def auth_token
-      issue_token(user_id: user.id, exp: self.expiration_time)
+      self.issue_token(user_id: user.id, exp: expiration_time)
+    end
+
+    def expiration_time
+      self.token_lifetime.from_now.to_i
     end
 
     def user

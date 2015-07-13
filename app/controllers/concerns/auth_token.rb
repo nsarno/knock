@@ -1,10 +1,10 @@
 require 'jwt'
 
 module AuthToken
-  attr_accessor :expiration_time
+  attr_accessor :token_lifetime
 
-  def expiration_time
-    @expiration_time || 1.day
+  def token_lifetime
+    1.day
   end
 
   def issue_token payload
