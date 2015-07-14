@@ -55,7 +55,13 @@ class MyResourceController < ApplicationController
 end
 ```
 
-## Authenticating from a web or mobile application (HTTPS should be enabled):
+If no valid token is passed with the request, Knock will respond with:
+
+```
+head :unauthorized
+```
+
+### Authenticating from a web or mobile application (HTTPS should be enabled):
 
 To get a token from your API:
 
@@ -70,7 +76,7 @@ Authorization: Bearer JWT_TOKEN
 GET /myresources
 ```
 
-## CORS
+### CORS
 
 To enable cross-origin resource sharing, check out the [rack-cors](https://github.com/cyu/rack-cors) gem.
 
