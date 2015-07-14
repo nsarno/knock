@@ -40,6 +40,40 @@ class ApplicationController < ActionController::API
 end
 ```
 
+You can now protect your resources by adding the `authenticate` before_action
+to your controllers like this:
+
+```ruby
+class MyResourceController < ApplicationController
+  before_action :authenticate
+
+  def index
+    # etc...
+  end
+
+  # etc...
+end
+```
+
+## Authenticating from a web or mobile application (HTTPS should be enabled):
+
+To get a token from your API:
+
+```
+POST /knock/auth_token { email: 'foo@example.net', password: 'bar' }
+```
+
+To make an authenticated request to your API, you need to pass the token in the request header:
+
+```
+Authorization: Bearer JWT_TOKEN
+GET /myresources
+```
+
+## CORS
+
+To enable cross-origin resource sharing, check out the [rack-cors](https://github.com/cyu/rack-cors) gem.
+
 ## Contributing
 
 1. Fork it ( https://github.com/[my-github-username]/mygem/fork )
