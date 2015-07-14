@@ -1,6 +1,6 @@
-require_dependency "simsim/application_controller"
+require_dependency "knock/application_controller"
 
-module Simsim
+module Knock
   class AuthTokenController < ApplicationController
     before_action :authenticate!
 

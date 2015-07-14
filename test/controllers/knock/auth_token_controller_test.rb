@@ -1,6 +1,6 @@
 require 'test_helper'
 
-module Simsim
+module Knock
   class AuthTokenControllerTest < ActionController::TestCase
     setup do
       @routes = Engine.routes

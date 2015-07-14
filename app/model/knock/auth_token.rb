@@ -1,6 +1,6 @@
 require 'jwt'
 
-module Simsim
+module Knock
   cattr_accessor :token_lifetime
 
   def self.token_lifetime
@@ -25,7 +25,7 @@ module Simsim
   private
 
     def expiration_time
-      Simsim.token_lifetime.from_now.to_i
+      Knock.token_lifetime.from_now.to_i
     end
   end
 end

@@ -1,4 +1,4 @@
 Rails.application.routes.draw do
   resources :protected_resources
-  mount Simsim::Engine => "/simsim"
+  mount Knock::Engine => "/knock"
 end
