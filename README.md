@@ -100,7 +100,6 @@ To enable cross-origin resource sharing, check out the [rack-cors](https://githu
 ### Related links
 
 - [10 things you should know about tokens](https://auth0.com/blog/2014/01/27/ten-things-you-should-know-about-tokens-and-cookies/)
-- [jwt.io](http://jwt.io/)
 
 ## Contributing
 
