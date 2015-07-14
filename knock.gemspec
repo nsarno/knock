@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.email       = ["arnaud.mesureur@gmail.com"]
   s.homepage    = "https://github.com/nsarno/knock"
   s.summary     = "Seamless JWT authentication for Rails API."
-  s.description = "Authentication solution for Rails based on JWT (http://jwt.io/)"
+  s.description = "Authentication solution for Rails based on JWT"
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]

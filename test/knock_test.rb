@@ -1,4 +1,4 @@
 require 'test_helper'
 
-class SimsimTest < ActiveSupport::TestCase
+class KnockTest < ActiveSupport::TestCase
 end
