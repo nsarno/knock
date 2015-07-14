@@ -5,7 +5,7 @@ module Simsim
     before_action :authenticate!
 
     def create
-      render json: { jwt: auth_token }, status: :created
+      render json: { jwt: auth_token.token }, status: :created
     end
 
   private
@@ -14,11 +14,7 @@ module Simsim
     end
 
     def auth_token
-      self.issue_token(user_id: user.id, exp: expiration_time)
-    end
-
-    def expiration_time
-      self.token_lifetime.from_now.to_i
+      AuthToken.new payload: { user_id: user.id }
     end
 
     def user

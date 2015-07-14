@@ -1,10 +1,9 @@
 require 'test_helper'
 
 class ProtectedResourcesControllerTest < ActionController::TestCase
-
   def authenticate
     @user = users(:one)
-    @token = @controller.issue_token({ user_id: @user.id })
+    @token = Simsim::AuthToken.new(payload: { user_id: @user.id }).token
     @request.env['HTTP_AUTHORIZATION'] = "Bearer #{@token}"
   end
 
