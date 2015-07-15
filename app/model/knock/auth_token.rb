@@ -1,21 +1,11 @@
 require 'jwt'
 
 module Knock
-  cattr_accessor :token_lifetime
-
-  def self.token_lifetime
-    @token_lifetime || 1.day
-  end
-
   class AuthToken
     attr_reader :token
 
     def initialize payload: {}, token: nil
-      if token.nil?
-        @token = JWT.encode ({ exp: expiration_time }).merge(payload), Rails.application.secrets.secret_key_base, 'HS256'
-      else
-        @token = token
-      end
+      @token = token || JWT.encode ({ exp: expiration_time }).merge(payload), Knock.token_secret_signature_key, 'HS256'
     end
 
     def validate!
