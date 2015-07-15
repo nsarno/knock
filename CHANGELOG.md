@@ -9,6 +9,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - `Knock.token_audience` configuration variable
 - audience claim verification when decoding token
 - `Knock.setup` method for configuration in `knock.rb` initializer
+- generator for initializer (rails g knock:install)
 
 ## [1.0.0] - 2015-14-07
 ### Fixed
