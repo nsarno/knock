@@ -37,6 +37,13 @@ And then execute:
 
     $ bundle install
 
+Finally, run the install generator:
+
+    $ rails generate knock:install
+
+It will create the following initializer `config/initializers/knock.rb`.
+This file contains all the informations about the existing configuration options.
+
 ### Usage
 
 Mount the `Knock::Engine` in your `config/routes.rb`
