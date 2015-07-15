@@ -6,6 +6,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - `Knock.token_lifetime` configuration variable
 - `Knock.token_secret_signature_key` configuration variable
+- `Knock.token_audience` configuration variable
+- audience claim verification when decoding token
+- `Knock.setup` method for configuration in `knock.rb` initializer
 
 ## [1.0.0] - 2015-14-07
 ### Fixed

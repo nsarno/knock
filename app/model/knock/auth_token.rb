@@ -5,17 +5,29 @@ module Knock
     attr_reader :token
 
     def initialize payload: {}, token: nil
-      @token = token || JWT.encode ({ exp: expiration_time }).merge(payload), Knock.token_secret_signature_key, 'HS256'
+      @token = token || JWT.encode(claims.merge(payload), key, 'HS256')
     end
 
     def validate!
-      JWT.decode @token, Rails.application.secrets.secret_key_base
+      JWT.decode @token, key, true, verify_claims
     end
 
   private
+    def key
+      Knock.token_secret_signature_key.call
+    end
 
-    def expiration_time
-      Knock.token_lifetime.from_now.to_i
+    def claims
+      {
+        exp: Knock.token_lifetime.from_now.to_i,
+        aud: Knock.token_audience
+      }
+    end
+
+    def verify_claims
+      {
+        aud: Knock.token_audience, verify_claims: Knock.token_audience.present?
+      }
     end
   end
 end
