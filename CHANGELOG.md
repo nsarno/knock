@@ -2,6 +2,15 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased][unreleased]
+### Changed
+- Introduce a way to configure how the current_user is retrieved when
+  validating a token. (#1)
+- Use "sub" claim to store the user id by default instead of "user_id"
+
+### Fixed
+- Decode auth0_client_secret in default configuration for Auth0
+
 ## [1.1.0] - 2015-07-15
 
 ## [1.1.0.rc1] - 2015-07-15

@@ -3,7 +3,7 @@ require 'test_helper'
 class ProtectedResourcesControllerTest < ActionController::TestCase
   def authenticate
     @user = users(:one)
-    @token = Knock::AuthToken.new(payload: { user_id: @user.id }).token
+    @token = Knock::AuthToken.new(payload: { sub: @user.id }).token
     @request.env['HTTP_AUTHORIZATION'] = "Bearer #{@token}"
   end
 

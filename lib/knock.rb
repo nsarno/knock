@@ -11,6 +11,9 @@ module Knock
   mattr_accessor :token_secret_signature_key
   self.token_secret_signature_key = -> { Rails.application.secrets.secret_key_base }
 
+  mattr_accessor :current_user_from_token
+  self.current_user_from_token = -> (claims) { User.find claims['sub'] }
+
   # Default way to setup Knock. Run rails generate knock_install to create
   # a fresh initializer with all configuration values.
   def self.setup

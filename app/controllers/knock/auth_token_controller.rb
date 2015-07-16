@@ -14,7 +14,7 @@ module Knock
     end
 
     def auth_token
-      AuthToken.new payload: { user_id: user.id }
+      AuthToken.new payload: { sub: user.id }
     end
 
     def user
