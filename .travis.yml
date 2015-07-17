@@ -1,6 +1,14 @@
 language: ruby
 rvm:
-  - 2.1.0
+- 2.1.0
 addons:
   code_climate:
     repo_token: 61c3ea804322306871a6b7e06a0a6435672cd29aea0c2b286e6b837234ba9d90
+deploy:
+  provider: rubygems
+  api_key:
+    secure: WxGCqYToLKgYediVNmHUQ5SkJ3hfKIIu6K8b8Fvd4nb2v6p9tUo+Cz4xN/mTU1tUT5xF4D+P3Oek9Ih5GCL56s+i5C8T60v71azupcQoJpr9AlUxNVipJy+BaaNWb/yH2c3GWYtVJmG44s/nBSgG2WJLhkHSjHM+0CuUF0PknW8WUY7+zkZW3XsVh3bv9+O32uSYizdNt2IiccvqcjEKtmD+mZ5U5/Zwosy1ExmGXFXgFCKhK1oBu/ejqQdwRzY3LwquaTg9tEqR3Cl2dwDboXN1Ga5V7Q3+zhqCYPho33CtNr9ZhaeWS/fI3VcUa7O3fzS71JWSn97gqfqhkehXuGbptebLmLOgRjfe7RloH2VVc8NoqTFLYyvptD3522TG/kSH+etOVQgBpTGXf6TDD6FybH/ZQ0efFRzm00feAEmrbW+AkdSonTCVr/LYePnYWBPuBOZmOf2wuV0+84E5Jlw1wFRLG2JzRDWzScREIbZ8Q4ZvUihEKHIy8a76N6TBTRnAQv/FMfpx4wDXWibP3ji7De9HADjgkUOtk5qTKn8flvNGtJ+phBHyNEg0dFVVQdvyxUuhHWZV1SqKZOy4ITRSGzruufnvTrg09HKDDx/jImSrK3mT/64NVLmmnXMCz/CkLXLMcl6cohgyQCugucsNocy66AZYh8fTB3t0LQ4=
+  gem: knock
+  on:
+    tags: true
+    repo: nsarno/knock
