@@ -23,12 +23,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - generator for initializer (rails g knock:install)
 
 ## [1.0.0] - 2015-07-14
-### Fixed
-- Replaced all remaining references to deprecated gem name (Simsim)
 
 ## [1.0.0.rc1] - 2015-07-14
 ### Added
-- AuthToken model
-- AuthToken controller
-- /auth_token route
-- Authenticable module
+- `Knock::Authenticable` to secure endpoints with `before_action :authenticate`
+- `AuthToken` model provides JWT encapsulation
+- `AuthTokenController` provides out of the box sign in implementation
+
