@@ -3,7 +3,6 @@
 [![Build Status](https://travis-ci.org/nsarno/knock.svg)](https://travis-ci.org/nsarno/knock)
 [![Test Coverage](https://codeclimate.com/github/nsarno/knock/badges/coverage.svg)](https://codeclimate.com/github/nsarno/knock/coverage)
 [![Code Climate](https://codeclimate.com/github/nsarno/knock/badges/gpa.svg)](https://codeclimate.com/github/nsarno/knock)
-[![security](https://hakiri.io/github/nsarno/knock/master.svg)](https://hakiri.io/github/nsarno/knock/master)
 
 Seamless JWT authentication for Rails API
 
