@@ -100,7 +100,7 @@ POST /knock/auth_token { email: 'foo@example.net', password: 'bar' }
 To make an authenticated request to your API, you need to pass the token in the request header:
 
 ```
-Authorization: Bearer JWT_TOKEN
+Authorization: Bearer TOKEN
 GET /myresources
 ```
 
