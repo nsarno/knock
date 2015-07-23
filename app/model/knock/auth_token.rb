@@ -5,11 +5,17 @@ module Knock
     attr_reader :token
 
     def initialize payload: {}, token: nil
-      @token = token || JWT.encode(claims.merge(payload), key, 'HS256')
+      if token.present?
+        @payload, _ = JWT.decode token, key, true, verify_claims
+        @token = token
+      else
+        @payload = payload
+        @token = JWT.encode(claims.merge(payload), key, 'HS256')
+      end
     end
 
-    def validate!
-      JWT.decode @token, key, true, verify_claims
+    def current_user
+      @current_user ||= Knock.current_user_from_token.call @payload
     end
 
   private

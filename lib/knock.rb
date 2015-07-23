@@ -14,7 +14,7 @@ module Knock
   mattr_accessor :current_user_from_token
   self.current_user_from_token = -> (claims) { User.find claims['sub'] }
 
-  # Default way to setup Knock. Run rails generate knock_install to create
+  # Default way to setup Knock. Run `rails generate knock:install` to create
   # a fresh initializer with all configuration values.
   def self.setup
     yield self

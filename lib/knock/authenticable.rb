@@ -4,8 +4,7 @@ module Knock::Authenticable
   def authenticate
     begin
       token = request.headers['Authorization'].split(' ').last
-      payload, header = Knock::AuthToken.new(token: token).validate!
-      @current_user = Knock.current_user_from_token.call(payload)
+      @current_user = Knock::AuthToken.new(token: token).current_user
     rescue
       head :unauthorized
     end
