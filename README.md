@@ -3,19 +3,24 @@
 [![Build Status](https://travis-ci.org/nsarno/knock.svg)](https://travis-ci.org/nsarno/knock)
 [![Test Coverage](https://codeclimate.com/github/nsarno/knock/badges/coverage.svg)](https://codeclimate.com/github/nsarno/knock/coverage)
 [![Code Climate](https://codeclimate.com/github/nsarno/knock/badges/gpa.svg)](https://codeclimate.com/github/nsarno/knock)
-[![security](https://hakiri.io/github/nsarno/knock/master.svg)](https://hakiri.io/github/nsarno/knock/master)
+[![Dependencies](https://img.shields.io/gemnasium/nsarno/knock.svg)](https://gemnasium.com/nsarno/knock)
 
 Seamless JWT authentication for Rails API
 
 ## Description
 
-Knock is a [rails engine](http://guides.rubyonrails.org/engines.html) providing an authentication solution for Rails API only application based on JSON Web Tokens ([JWT](http://jwt.io/)).
+Knock is an authentication solution for Rails API-only application based on JSON Web Tokens.
+
+### What are JSON Web Tokens?
+
+[![JWT](http://jwt.io/assets/badge.svg)](http://jwt.io/)
 
 ### Why should I use this?
 
 - It's lightweight.
 - It's tailored for Rails API-only application.
 - It's [stateless](https://en.wikipedia.org/wiki/Representational_state_transfer#Stateless).
+- It works out of the box with [Auth0](https://auth0.com/docs/server-apis/rails).
 
 ### Is this gem going to be maintained?
 
@@ -96,7 +101,7 @@ POST /knock/auth_token { email: 'foo@example.net', password: 'bar' }
 To make an authenticated request to your API, you need to pass the token in the request header:
 
 ```
-Authorization: Bearer JWT_TOKEN
+Authorization: Bearer TOKEN
 GET /myresources
 ```
 
