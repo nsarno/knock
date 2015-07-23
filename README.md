@@ -73,7 +73,7 @@ You can now protect your resources by adding the `authenticate` before_action
 to your controllers like this:
 
 ```ruby
-class MyResourceController < ApplicationController
+class MyResourcesController < ApplicationController
   before_action :authenticate
 
   def index
@@ -102,14 +102,41 @@ To make an authenticated request to your API, you need to pass the token in the 
 
 ```
 Authorization: Bearer TOKEN
-GET /myresources
+GET /my_resources
 ```
 
-### CORS
+### Authenticated tests
+
+To authenticate within your tests:
+
+1. Create a valid token
+2. Pass it in your request
+
+e.g.
+
+```ruby
+class MyResourcesControllerTest < ActionController::TestCase
+  def authenticate
+    token = Knock::AuthToken.new(payload: { sub: users(:one).id }).token
+    request.env['HTTP_AUTHORIZATION'] = "bearer #{token}"
+  end
+  
+  setup do
+    authenticate
+  end
+  
+  it 'responds successfully' do
+    get :index
+    assert_response :success
+  end
+end
+```
+
+## CORS
 
 To enable cross-origin resource sharing, check out the [rack-cors](https://github.com/cyu/rack-cors) gem.
 
-### Related links
+## Related links
 
 - [10 things you should know about tokens](https://auth0.com/blog/2014/01/27/ten-things-you-should-know-about-tokens-and-cookies/)
 
