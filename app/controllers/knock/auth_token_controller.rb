@@ -18,11 +18,11 @@ module Knock
     end
 
     def user
-      User.find_by! email: auth_params[:email]
+      Knock.current_user_from_handle.call auth_params[Knock.handle_attr]
     end
 
     def auth_params
-      params.require(:auth).permit :email, :password
+      params.require(:auth).permit Knock.handle_attr, :password
     end
   end
 end
