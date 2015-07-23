@@ -2,11 +2,18 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.3.0] - 2015-07-23
+### Added
+- Configuration option for how the current_user is retrieved when signing in.
+- Configuration option for the handle attribute (email by default).
+
 ## [1.2.0] - 2015-07-16
+### Added
+- Configuration option for how the current_user is retrieved when validating
+  a token. (#1)
+
 ### Changed
-- Introduce a way to configure how the current_user is retrieved when
-  validating a token. (#1)
-- Use "sub" claim to store the user id by default instead of "user_id"
+- Use "sub" claim to store the user id by default instead of "user_id". (#1)
 
 ### Fixed
 - Decode auth0_client_secret in default configuration for Auth0
