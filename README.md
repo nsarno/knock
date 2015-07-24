@@ -56,7 +56,7 @@ Mount the `Knock::Engine` in your `config/routes.rb`
 ```ruby
 Rails.application.routes.draw do
   mount Knock::Engine => "/knock"
-  
+
   # your routes ...
 end
 ```
@@ -120,11 +120,11 @@ class MyResourcesControllerTest < ActionController::TestCase
     token = Knock::AuthToken.new(payload: { sub: users(:one).id }).token
     request.env['HTTP_AUTHORIZATION'] = "bearer #{token}"
   end
-  
+
   setup do
     authenticate
   end
-  
+
   it 'responds successfully' do
     get :index
     assert_response :success
@@ -142,7 +142,7 @@ To enable cross-origin resource sharing, check out the [rack-cors](https://githu
 
 ## Contributing
 
-1. Fork it ( https://github.com/[my-github-username]/mygem/fork )
+1. Fork it ( https://github.com/nsarno/knock/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
