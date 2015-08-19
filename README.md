@@ -90,20 +90,27 @@ If no valid token is passed with the request, Knock will respond with:
 head :unauthorized
 ```
 
-### Authenticating from a web or mobile application (HTTPS should be enabled):
+### Authenticating from a web or mobile application:
 
-To get a token from your API:
-
+Example request to get a token from your API:
 ```
-POST /knock/auth_token { email: 'foo@example.net', password: 'bar' }
+POST /knock/auth_token
+{"auth": {"email": "foo@bar.com", "password": "secret"}}
+```
+
+Example response from the API:
+```
+201 Created
+{"jwt": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9"}
 ```
 
 To make an authenticated request to your API, you need to pass the token in the request header:
-
 ```
-Authorization: Bearer TOKEN
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9
 GET /my_resources
 ```
+
+**NB:** HTTPS should always be enabled when sending a password or token in your request.
 
 ### Authenticated tests
 
