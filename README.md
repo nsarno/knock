@@ -103,7 +103,11 @@ Example response from the API:
 201 Created
 {"jwt": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9"}
 ```
-
+If you're using POSTMAN, make sure to specify 'auth':
+```
+auth[email]    example@hello.com
+auth[password] supersecure
+```
 To make an authenticated request to your API, you need to pass the token in the request header:
 ```
 Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9
