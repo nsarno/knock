@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/nsarno/knock.svg)](https://travis-ci.org/nsarno/knock)
 [![Test Coverage](https://codeclimate.com/github/nsarno/knock/badges/coverage.svg)](https://codeclimate.com/github/nsarno/knock/coverage)
 [![Code Climate](https://codeclimate.com/github/nsarno/knock/badges/gpa.svg)](https://codeclimate.com/github/nsarno/knock)
-[![Dependencies](https://img.shields.io/gemnasium/nsarno/knock.svg)](https://gemnasium.com/nsarno/knock)
+[![Dependency Status](https://gemnasium.com/nsarno/knock.svg)](https://gemnasium.com/nsarno/knock)
 
 Seamless JWT authentication for Rails API
 
@@ -56,7 +56,7 @@ Mount the `Knock::Engine` in your `config/routes.rb`
 ```ruby
 Rails.application.routes.draw do
   mount Knock::Engine => "/knock"
-  
+
   # your routes ...
 end
 ```
@@ -90,20 +90,27 @@ If no valid token is passed with the request, Knock will respond with:
 head :unauthorized
 ```
 
-### Authenticating from a web or mobile application (HTTPS should be enabled):
+### Authenticating from a web or mobile application:
 
-To get a token from your API:
-
+Example request to get a token from your API:
 ```
-POST /knock/auth_token { email: 'foo@example.net', password: 'bar' }
+POST /knock/auth_token
+{"auth": {"email": "foo@bar.com", "password": "secret"}}
+```
+
+Example response from the API:
+```
+201 Created
+{"jwt": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9"}
 ```
 
 To make an authenticated request to your API, you need to pass the token in the request header:
-
 ```
-Authorization: Bearer TOKEN
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9
 GET /my_resources
 ```
+
+**NB:** HTTPS should always be enabled when sending a password or token in your request.
 
 ### Authenticated tests
 
@@ -120,11 +127,11 @@ class MyResourcesControllerTest < ActionController::TestCase
     token = Knock::AuthToken.new(payload: { sub: users(:one).id }).token
     request.env['HTTP_AUTHORIZATION'] = "bearer #{token}"
   end
-  
+
   setup do
     authenticate
   end
-  
+
   it 'responds successfully' do
     get :index
     assert_response :success
@@ -142,7 +149,7 @@ To enable cross-origin resource sharing, check out the [rack-cors](https://githu
 
 ## Contributing
 
-1. Fork it ( https://github.com/[my-github-username]/mygem/fork )
+1. Fork it ( https://github.com/nsarno/knock/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
