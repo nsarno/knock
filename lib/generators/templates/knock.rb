@@ -18,6 +18,8 @@ Knock.setup do |config|
   ## AuthTokenController parameters. It also uses the same variable to enforce
   ## permitted values in the controller.
   ##
+  ## You must raise ActiveRecord::RecordNotFound if the resource cannot be retrieved.
+  ##
   ## Default:
   # self.current_user_from_handle = -> (handle) { User.find_by! Knock.handle_attr => handle }
 
@@ -27,6 +29,8 @@ Knock.setup do |config|
   ## This is how you can tell Knock how to retrieve the current_user.
   ## By default, it assumes you have a model called `User` and that
   ## the user_id is stored in the 'sub' claim.
+  ##
+  ## You must raise ActiveRecord::RecordNotFound if the resource cannot be retrieved.
   ##
   ## Default:
   # config.current_user_from_token = -> (claims) { User.find claims['sub'] }
