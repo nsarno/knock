@@ -24,9 +24,7 @@ Knock is an authentication solution for Rails API-only application based on JSON
 
 ### Is this gem going to be maintained?
 
-Yes.
-
-We're using it in our own apps, and we'll keep improving it.
+Yes. And we will keep improving it.
 
 ## Getting Started
 
@@ -48,6 +46,20 @@ Finally, run the install generator:
 
 It will create the following initializer `config/initializers/knock.rb`.
 This file contains all the informations about the existing configuration options.
+
+### Requirements
+
+Knock makes one assumption about your user model:
+
+It must have an `authenticate` method, similar to the one added by [has_secure_password](http://api.rubyonrails.org/classes/ActiveModel/SecurePassword/ClassMethods.html#method-i-has_secure_password).
+
+```ruby
+class User < ActiveRecord::Base
+  has_secure_password
+end
+```
+
+Using `has_secure_password` is recommended, but you don't have to as long as your user model implements an `authenticate` instance method with the same behavior.
 
 ### Usage
 
