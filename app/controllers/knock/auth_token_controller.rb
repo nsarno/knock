@@ -10,7 +10,7 @@ module Knock
 
   private
     def authenticate!
-      raise ActiveRecord::RecordNotFound unless user.authenticate(auth_params[:password])
+      raise Knock.record_not_found_error_class unless user.authenticate(auth_params[:password])
     end
 
     def auth_token
