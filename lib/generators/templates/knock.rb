@@ -35,17 +35,16 @@ Knock.setup do |config|
   ## Default:
   # config.current_user_from_token = -> (claims) { User.find claims['sub'] }
 
-  ## Record not found error class
+  ## Object Mapper
   ## --------------------------------------------
   ##
-  ## This is how you can tell Knock what error class to use for
-  ## record not found cases. By default, it assumes you have
-  ## ActiveRecord and will raise ActiveRecord::RecordNotFound.
-  ## If you are using Mongoid you can raise Mongoid::Errors::DocumentNotFound
+  ## This is how you can tell Knock what object relation mapper you
+  ## are currently using. It defaults to :active_record but can also
+  ## be set to `:mongoid`.
   ##
   ##
   ## Default:
-  # config.record_not_found_error_class = ActiveRecord::RecordNotFound
+  # config.object_mapper = :active_record
 
   ## Expiration claim
   ## ----------------
