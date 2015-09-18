@@ -35,6 +35,16 @@ Knock.setup do |config|
   ## Default:
   # config.current_user_from_token = -> (claims) { User.find claims['sub'] }
 
+  ## Object Mapper
+  ## --------------------------------------------
+  ##
+  ## This is how you can tell Knock what object relation mapper you
+  ## are currently using. It defaults to :active_record but can also
+  ## be set to `:mongoid`.
+  ##
+  ##
+  ## Default:
+  # config.object_mapper = :active_record
 
   ## Expiration claim
   ## ----------------
