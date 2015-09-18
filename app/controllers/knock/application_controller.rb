@@ -1,6 +1,6 @@
 module Knock
   class ApplicationController < ActionController::Base
-    rescue_from ActiveRecord::RecordNotFound, with: :not_found
+    rescue_from Knock.record_not_found_error_class, with: :not_found
 
   private
 

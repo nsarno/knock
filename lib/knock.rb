@@ -5,6 +5,9 @@ module Knock
   mattr_accessor :handle_attr
   self.handle_attr = :email
 
+  mattr_accessor :record_not_found_error_class
+  self.record_not_found_error_class = ActiveRecord::RecordNotFound
+
   mattr_accessor :current_user_from_handle
   self.current_user_from_handle = -> (handle) { User.find_by! Knock.handle_attr => handle }
 
