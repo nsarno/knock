@@ -3,6 +3,7 @@ require 'jwt'
 module Knock
   class AuthToken
     attr_reader :token
+    attr_reader :payload
 
     def initialize payload: {}, token: nil
       if token.present?
@@ -14,8 +15,12 @@ module Knock
       end
     end
 
-    def current_user
-      @current_user ||= Knock.current_user_from_token.call @payload
+    def resource resource_class
+      if resource_class.respond_to? :find_with_payload
+        resource_class.find_with_payload @payload
+      else
+        resource_class.find @payload['sub']
+      end
     end
 
   private

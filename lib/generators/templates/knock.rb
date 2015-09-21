@@ -1,41 +1,5 @@
 Knock.setup do |config|
 
-  ## User handle attribute
-  ## ---------------------
-  ##
-  ## The attribute used to uniquely identify a user.
-  ##
-  ## Default:
-  # config.handle_attr = :email
-
-  ## Current user retrieval from handle when signing in
-  ## --------------------------------------------------
-  ##
-  ## This is where you can configure how to retrieve the current user when
-  ## signing in.
-  ##
-  ## Knock uses the `handle_attr` variable to retrieve the handle from the
-  ## AuthTokenController parameters. It also uses the same variable to enforce
-  ## permitted values in the controller.
-  ##
-  ## You must raise ActiveRecord::RecordNotFound if the resource cannot be retrieved.
-  ##
-  ## Default:
-  # self.current_user_from_handle = -> (handle) { User.find_by! Knock.handle_attr => handle }
-
-  ## Current user retrieval when validating token
-  ## --------------------------------------------
-  ##
-  ## This is how you can tell Knock how to retrieve the current_user.
-  ## By default, it assumes you have a model called `User` and that
-  ## the user_id is stored in the 'sub' claim.
-  ##
-  ## You must raise ActiveRecord::RecordNotFound if the resource cannot be retrieved.
-  ##
-  ## Default:
-  # config.current_user_from_token = -> (claims) { User.find claims['sub'] }
-
-
   ## Expiration claim
   ## ----------------
   ##

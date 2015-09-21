@@ -28,6 +28,23 @@ Yes. And we will keep improving it.
 
 ## Getting Started
 
+### Requirements
+
+Knock makes one assumption about your user model:
+
+It must have an `authenticate` method, similar to the one added by [has_secure_password](http://api.rubyonrails.org/classes/ActiveModel/SecurePassword/ClassMethods.html#method-i-has_secure_password).
+
+```ruby
+class User < ActiveRecord::Base
+  has_secure_password
+end
+```
+
+Using `has_secure_password` is recommended, but you don't have to as long as your user model implements an `authenticate` instance method with the same behavior.
+
+Knock (>= 2.0) can handle multiple user models (eg: User, Admin, etc).
+Although, for the sake of simplicity, all examples in this README will use the `User` model.
+
 ### Installation
 
 Add this line to your application's Gemfile:
@@ -47,46 +64,29 @@ Finally, run the install generator:
 It will create the following initializer `config/initializers/knock.rb`.
 This file contains all the informations about the existing configuration options.
 
-### Requirements
+If you don't use an external authentication solution like Auth0, you also need to
+provide a way for users to authenticate:
 
-Knock makes one assumption about your user model:
+    $ rails generate knock:token_controller user
 
-It must have an `authenticate` method, similar to the one added by [has_secure_password](http://api.rubyonrails.org/classes/ActiveModel/SecurePassword/ClassMethods.html#method-i-has_secure_password).
-
-```ruby
-class User < ActiveRecord::Base
-  has_secure_password
-end
-```
-
-Using `has_secure_password` is recommended, but you don't have to as long as your user model implements an `authenticate` instance method with the same behavior.
+This will generate the controller `user_token_controller.rb` and add the required
+route to your `config/routes.rb` file.
 
 ### Usage
 
-Mount the `Knock::Engine` in your `config/routes.rb`
-
-```ruby
-Rails.application.routes.draw do
-  mount Knock::Engine => "/knock"
-
-  # your routes ...
-end
-```
-
-Then include the `Knock::Authenticable` module in your `ApplicationController`
+Include the `Knock::Authenticatable` module in your `ApplicationController`
 
 ```ruby
 class ApplicationController < ActionController::API
-  include Knock::Authenticable
+  include Knock::Authenticatable
 end
 ```
 
-You can now protect your resources by adding the `authenticate` before_action
-to your controllers like this:
+You can now restrict access to your controllers like this:
 
 ```ruby
-class MyResourcesController < ApplicationController
-  before_action :authenticate
+class SecuredController < ApplicationController
+  before_action :authenticate_user
 
   def index
     # etc...
@@ -94,6 +94,14 @@ class MyResourcesController < ApplicationController
 
   # etc...
 end
+```
+
+If your user model is something other than User, replace "user" with "yourmodel". The same logic applies everywhere.
+
+You can access the current authenticated user in your controller with this method:
+
+```ruby
+current_user
 ```
 
 If no valid token is passed with the request, Knock will respond with:
@@ -106,7 +114,7 @@ head :unauthorized
 
 Example request to get a token from your API:
 ```
-POST /knock/auth_token
+POST /user_auth_token
 {"auth": {"email": "foo@bar.com", "password": "secret"}}
 ```
 
@@ -134,7 +142,7 @@ To authenticate within your tests:
 e.g.
 
 ```ruby
-class MyResourcesControllerTest < ActionController::TestCase
+class SecuredControllerTest < ActionController::TestCase
   def authenticate
     token = Knock::AuthToken.new(payload: { sub: users(:one).id }).token
     request.env['HTTP_AUTHORIZATION'] = "bearer #{token}"

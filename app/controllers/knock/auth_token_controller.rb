@@ -1,28 +1,41 @@
-require_dependency "knock/application_controller"
-
 module Knock
-  class AuthTokenController < ApplicationController
-    before_action :authenticate!
+  class AuthTokenController < ActionController::Base
+    before_action :authenticate
 
     def create
       render json: { jwt: auth_token.token }, status: :created
     end
 
   private
-    def authenticate!
-      raise ActiveRecord::RecordNotFound unless user.authenticate(auth_params[:password])
+    def authenticate
+      unless resource.present? && resource.authenticate(auth_params[:password])
+        head :not_found
+      end
     end
 
     def auth_token
-      AuthToken.new payload: { sub: user.id }
-    end
-
-    def user
-      Knock.current_user_from_handle.call auth_params[Knock.handle_attr]
+      AuthToken.new payload: { sub: resource.id }
     end
 
     def auth_params
-      params.require(:auth).permit Knock.handle_attr, :password
+      params.require(:auth).permit!
+    end
+
+    def resource
+      @resource ||= 
+        if resource_class.respond_to? :find_for_authentication
+          resource_class.find_for_authentication auth_params
+        else
+          resource_class.find_by email: auth_params[:email]
+        end
+    end
+
+    def resource_class
+      resource_name.constantize
+    end
+
+    def resource_name
+      self.class.name.split('TokenController').first
     end
   end
 end

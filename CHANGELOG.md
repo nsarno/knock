@@ -2,6 +2,33 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.0] - Unreleased
+
+You can now handle multiple user models other than User (useful if you have
+an Admin model for example).
+Also some customization has been moved from the initializer to the model which gives more flexibility.
+
+### Added
+- Define `find_for_authentication` in a resource model (eg: User) to customize the way
+the resource is fetched from the database when decoding the token. This deprecates
+the use of `Knock.current_user_from_token`.
+- Define `find_for_token_creation` in a resource model (eg: User) to customize the way
+the resource is fetched from the database when generating an authentication token. This deprecates
+the use of `Knock.current_user_from_handle`.
+- Authenticate any resource (eg: `User`, `Admin`, ...) by including the
+`Knock::Authenticatable` module and calling the corresponding before action
+(eg: `authenticate_user`, `authenticate_admin`, ...).
+- Generator for token controller (for signing in): `knock:token_controller` .
+
+### Changed
+- Use `Knock::Authenticatable` instead of `Knock::Authenticable`.
+- To secure controllers, use `authenticate_user` instead of `authenticate`.
+
+### Removed
+- `Knock.current_user_from_handle`
+- `Knock.current_user_from_token`
+- No need to mount the engine anymore.
+
 ## [1.3.0] - 2015-07-23
 ### Added
 - Configuration option for how the current_user is retrieved when signing in.
