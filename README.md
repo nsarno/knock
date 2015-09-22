@@ -24,7 +24,11 @@ Knock is an authentication solution for Rails API-only application based on JSON
 
 ### Is this gem going to be maintained?
 
-Yes. And we will keep improving it.
+Yes.
+
+### Is this gem going to be improved?
+
+Yes, most likely. Really want some features? Don't hesitate to open an issue :)
 
 ## Getting Started
 
