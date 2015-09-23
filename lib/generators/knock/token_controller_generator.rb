@@ -13,7 +13,7 @@ module Knock
     end
 
     def add_route
-      route "post '#{name.underscore}_token' => '#{name.underscore}_token#create"
+      route "post '#{name.underscore}_token' => '#{name.underscore}_token#create'"
     end
 
     private
