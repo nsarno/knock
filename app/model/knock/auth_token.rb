@@ -18,8 +18,8 @@ module Knock
     end
 
     def resource resource_class
-      if resource_class.respond_to? :find_with_payload
-        resource_class.find_with_payload @payload
+      if resource_class.respond_to? :find_for_authentication
+        resource_class.find_for_authentication @payload
       else
         resource_class.find @payload['sub']
       end
