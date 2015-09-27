@@ -18,5 +18,6 @@ class UserTokenControllerTest < ActionController::TestCase
   test "responds with 201" do
     post :create, auth: { email: @user.email, password: 'secret' }
     assert_response :created
+    assert JSON.parse(response.body).keys.include?('jwt')
   end
 end
