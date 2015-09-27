@@ -3,7 +3,7 @@ module Knock
     before_action :authenticate
 
     def create
-      render json: { jwt: auth_token.token }, status: :created
+      render json: auth_token, status: :created
     end
 
   private
