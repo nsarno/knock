@@ -48,7 +48,7 @@ Knock.setup do |config|
   ## Audience claim
   ## --------------
   ##
-  ## Configure the audience claim to indentify the recipients that the token
+  ## Configure the audience claim to identify the recipients that the token
   ## is intended for.
   ##
   ## Default:
