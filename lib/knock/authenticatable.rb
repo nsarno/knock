@@ -9,7 +9,7 @@ module Knock::Authenticatable
       return head(:unauthorized) unless @resource
       define_current_resource_getter(resource_class)
     rescue
-      return head(:unauthorized)
+      false
     end
   end
 
@@ -17,9 +17,16 @@ module Knock::Authenticatable
 
   def method_missing(method, *args)
     prefix, *parts = method.to_s.split('_')
+    
     if prefix == 'authenticate'
-      resource_class = constant_from_parts(parts)
-      send(:authenticate_for, resource_class)
+      parts = parts.join("_").split("_or_")
+
+      for part in parts
+        resource_class = constant_from_parts(part)
+        return if send(:authenticate_for, resource_class)
+      end
+
+      return head(:unauthorized)
     else
       super
     end
@@ -41,6 +48,6 @@ module Knock::Authenticatable
   # If trying to use `authenticate_user` but no `User` constant exists,
   # it makes more sense to raise NameError than NoMethodError.
   def constant_from_parts parts
-    parts.map(&:capitalize).join.constantize
+    parts.split('_').map(&:capitalize).join.constantize
   end
 end
