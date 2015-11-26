@@ -4,7 +4,10 @@ module Knock::Authenticable
   def authenticate
     begin
       token = request.headers['Authorization'].split(' ').last
-      @current_user = Knock::AuthToken.new(token: token).current_user
+      pubkey = File.exists? 'config/pubkey.pem' ?
+                              OpenSSL::PKey::RSA.new(File.read('config/pubkey.pem')) :
+                              nil
+      @current_user = Knock::AuthToken.new(token: token, decrypt_key: pubkey).current_user
     rescue
       head :unauthorized
     end
