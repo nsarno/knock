@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="939a4ecb-b9e2-404b-bdd5-fcdb626b2da0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/model/knock/auth_token.rb" afterPath="$PROJECT_DIR$/app/model/knock/auth_token.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/knock/authenticable.rb" afterPath="$PROJECT_DIR$/lib/knock/authenticable.rb" />
-    </list>
+    <list default="true" id="939a4ecb-b9e2-404b-bdd5-fcdb626b2da0" name="Default" comment="" />
     <ignored path="knock.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
