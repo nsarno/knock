@@ -21,7 +21,7 @@ Knock.setup do |config|
   ## You must raise ActiveRecord::RecordNotFound if the resource cannot be retrieved.
   ##
   ## Default:
-  # self.current_user_from_handle = -> (handle) { User.find_by! Knock.handle_attr => handle }
+  # config.current_user_from_handle = -> (handle) { User.find_by! Knock.handle_attr => handle }
 
   ## Current user retrieval when validating token
   ## --------------------------------------------
