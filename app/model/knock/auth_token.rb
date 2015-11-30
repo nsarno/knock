@@ -19,7 +19,7 @@ module Knock
       @current_user ||= Knock.current_user_from_token.call @payload
     end
 
-    private
+  private
     def key
       Knock.token_secret_signature_key.call
     end

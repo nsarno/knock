@@ -1,6 +1,5 @@
 require 'test_helper'
 require 'jwt'
-require 'json'
 
 module Knock
   class AuthTokenTest < ActiveSupport::TestCase
