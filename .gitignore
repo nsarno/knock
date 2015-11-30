@@ -10,3 +10,4 @@ test/dummy/.sass-cache
 coverage/
 *.gem
 Gemfile.lock
+.idea

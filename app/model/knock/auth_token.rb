@@ -4,9 +4,10 @@ module Knock
   class AuthToken
     attr_reader :token
 
-    def initialize payload: {}, token: nil
+    def initialize payload: {}, token: nil, decrypt_key: nil
       if token.present?
-        @payload, _ = JWT.decode token, key, true, verify_claims
+        decrypt_key ||= key
+        @payload, _ = JWT.decode token, decrypt_key, true, verify_claims
         @token = token
       else
         @payload = payload
@@ -18,7 +19,7 @@ module Knock
       @current_user ||= Knock.current_user_from_token.call @payload
     end
 
-  private
+    private
     def key
       Knock.token_secret_signature_key.call
     end
