@@ -103,6 +103,19 @@ class MyResourcesController < ApplicationController
 end
 ```
 
+If using RSA encryption, pass your public key when calling `authenticate`:
+
+```ruby
+before_action :authenticate_user
+
+  def authenticate_user
+    pubkey = OpenSSL::PKey::RSA.new(File.read('pubkey.pem'))
+    authenticate(key: pubkey)
+  end
+
+end
+```
+
 If no valid token is passed with the request, Knock will respond with:
 
 ```
