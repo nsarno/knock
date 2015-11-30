@@ -6,7 +6,7 @@ module Knock
 
     def initialize payload: {}, token: nil, decrypt_key: nil
       if token.present?
-        decrypt_key = decrypt_key || key
+        decrypt_key ||= key
         @payload, _ = JWT.decode token, decrypt_key, true, verify_claims
         @token = token
       else
