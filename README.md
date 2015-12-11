@@ -109,6 +109,20 @@ If no valid token is passed with the request, Knock will respond with:
 head :unauthorized
 ```
 
+If you just want to read the `current_user`, without actually authenticating, you can also do that:
+
+```ruby
+class CurrentUsersController < ApplicationController
+  def show
+    if current_user
+      head :ok
+    else
+      head :not_found
+    end
+  end
+end
+```
+
 ### Authenticating from a web or mobile application:
 
 Example request to get a token from your API:

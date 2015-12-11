@@ -8,6 +8,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Contribution guidelines
 - URL authentication
 - Allow use of different encoding algorithm
+- Expose `current_user` in the controllers without authenticating
 
 ### Fixed
 - Audience verification in token
