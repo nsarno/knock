@@ -5,6 +5,7 @@ rescue LoadError
 end
 
 require 'rdoc/task'
+require 'appraisal'
 
 RDoc::Task.new(:rdoc) do |rdoc|
   rdoc.rdoc_dir = 'rdoc'
@@ -33,5 +34,8 @@ Rake::TestTask.new(:test) do |t|
   t.verbose = false
 end
 
-
-task default: :test
+if !ENV["APPRAISAL_INITIALIZED"] && !ENV["TRAVIS"]
+  task default: :appraisal
+else
+  task default: :test
+end
