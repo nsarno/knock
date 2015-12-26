@@ -14,3 +14,4 @@ gemspec
 # gem 'byebug', group: [:development, :test]
 
 gem "codeclimate-test-reporter", group: :test, require: nil
+gem "appraisal"
