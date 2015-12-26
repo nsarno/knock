@@ -32,7 +32,7 @@ module Knock
 
     def verify_claims
       {
-        aud: Knock.token_audience, verify_claims: Knock.token_audience.present?
+        aud: Knock.token_audience, verify_aud: Knock.token_audience.present?
       }
     end
   end
