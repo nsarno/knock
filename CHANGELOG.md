@@ -2,6 +2,16 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Added
+- Travis integration
+- Contribution guidelines
+
+### Fixed
+- Audience verification in token
+- Use lambda syntax compatible with older ruby versions
+- A few typos
+
 ## [1.3.0] - 2015-07-23
 ### Added
 - Configuration option for how the current_user is retrieved when signing in.
