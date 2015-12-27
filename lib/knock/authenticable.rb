@@ -3,7 +3,7 @@ module Knock::Authenticable
 
   def authenticate
     begin
-      token = request.headers['Authorization'].split(' ').last
+      token = params[:token] || request.headers['Authorization'].split(' ').last
       @current_user = Knock::AuthToken.new(token: token).current_user
     rescue
       head :unauthorized
