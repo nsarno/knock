@@ -3,16 +3,11 @@ require 'jwt'
 
 module Knock
   class AuthTokenTest < ActiveSupport::TestCase
-    setup do
-      Knock.token_signature_algorithm = 'HS256'
-      Knock.token_secret_signature_key = -> { 'secret' }
-      Knock.token_public_key = nil
-      Knock.token_audience = nil
-    end
-
     test "verify algorithm" do
       Knock.token_signature_algorithm = 'RS256'
-      token = JWT.encode({sub: '1'}, 'secret', 'HS256')
+      key = Knock.token_secret_signature_key.call
+
+      token = JWT.encode({sub: '1'}, key, 'HS256')
 
       assert_raises(JWT::IncorrectAlgorithm) {
         AuthToken.new(token: token)
@@ -44,8 +39,9 @@ module Knock
 
     test "verify audience when token_audience is present" do
       Knock.token_audience = 'bar'
+      key = Knock.token_secret_signature_key.call
 
-      token = JWT.encode({sub: 'foo'}, 'secret', 'HS256')
+      token = JWT.encode({sub: 'foo'}, key, 'HS256')
 
       assert_raises(JWT::InvalidAudError) {
         AuthToken.new token: token
