@@ -53,6 +53,10 @@ In both case, knock will respond with `head :unauthorized`.
 ### Added
 - Handle multiple types of user models (useful if you need admin users for example).
 - Token controller generator (for signing in): `knock:token_controller`. Multiple user models means we need one token controller per user type.
+- Travis integration
+- Contribution guidelines
+- URL authentication
+- Allow use of different encoding algorithm
 
 ### Changed
 - Rename `Knock::Authenticable` to `Knock::Authenticatable`.
@@ -100,4 +104,3 @@ In both case, knock will respond with `head :unauthorized`.
 - `Knock::Authenticable` to secure endpoints with `before_action :authenticate`
 - `AuthToken` model provides JWT encapsulation
 - `AuthTokenController` provides out of the box sign in implementation
-

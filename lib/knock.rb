@@ -7,8 +7,14 @@ module Knock
   mattr_accessor :token_audience
   self.token_audience = nil
 
+  mattr_accessor :token_signature_algorithm
+  self.token_signature_algorithm = 'HS256'
+
   mattr_accessor :token_secret_signature_key
   self.token_secret_signature_key = -> { Rails.application.secrets.secret_key_base }
+
+  mattr_accessor :token_public_key
+  self.token_public_key = nil
 
   # Default way to setup Knock. Run `rails generate knock:install` to create
   # a fresh initializer with all configuration values.
