@@ -7,6 +7,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Travis integration
 - Contribution guidelines
 - URL authentication
+- Allow use of different encoding algorithm
 
 ### Fixed
 - Audience verification in token

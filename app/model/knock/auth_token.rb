@@ -6,11 +6,13 @@ module Knock
 
     def initialize payload: {}, token: nil
       if token.present?
-        @payload, _ = JWT.decode token, key, true, verify_claims
+        @payload, _ = JWT.decode token, decode_key, true, options
         @token = token
       else
         @payload = payload
-        @token = JWT.encode(claims.merge(payload), key, 'HS256')
+        @token = JWT.encode claims.merge(payload),
+          secret_key,
+          Knock.token_signature_algorithm
       end
     end
 
@@ -19,8 +21,18 @@ module Knock
     end
 
   private
-    def key
+    def secret_key
       Knock.token_secret_signature_key.call
+    end
+
+    def decode_key
+      Knock.token_public_key || secret_key
+    end
+
+    def options
+      verify_claims.merge({
+        algorithm: Knock.token_signature_algorithm
+      })
     end
 
     def claims
