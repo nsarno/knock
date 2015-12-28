@@ -158,6 +158,18 @@ class MyResourcesControllerTest < ActionController::TestCase
 end
 ```
 
+### Algorithms
+
+The JWT spec supports different kind of cryptographic signing algorithms.
+You can set `token_signature_algorithm` to use the one you want in the
+initializer or do nothing and use the default one (HS256).
+
+You can specify any of the algorithms supported by the
+[jwt](https://github.com/jwt/ruby-jwt) gem.
+
+If the algorithm you use requires a public key, you also need to set
+`token_public_key` in the initializer.
+
 ## CORS
 
 To enable cross-origin resource sharing, check out the [rack-cors](https://github.com/cyu/rack-cors) gem.
