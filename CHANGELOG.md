@@ -8,6 +8,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Contribution guidelines
 - URL authentication
 - Allow use of different encoding algorithm
+- Changed Rails dependency to rails >= 4.2
 
 ### Fixed
 - Audience verification in token
