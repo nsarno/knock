@@ -1,6 +1,4 @@
 language: ruby
-rvm:
-- 2.1.0
 addons:
   code_climate:
     repo_token: 61c3ea804322306871a6b7e06a0a6435672cd29aea0c2b286e6b837234ba9d90
@@ -15,3 +13,11 @@ deploy:
 notifications:
   slack:
     secure: Z/aucu3B6NfMxVOky4FK43hlhrArG7JbkCj6MZvldRzPP5Q/z2GD+isFvvvJVIO92Tu9NkBlGaSYmTKeQH8L5j2oqGKapVfK7zCUuLYuerP96P4OsLywHfH1E9T7xr9lRr/e/oEFmojN4WUoCXCtOUNVLr3e5vGJxmHIwyDKuLZDaTdKmeO6dVBwonkuccgM11d1CQmI9s5IGtv3jtQZGsccVEPQGbCDoD4s4xI8aEcf4YsXdSJ5v8vg0R3XEvc+GTRPvKAdPlKkFHfWgVyu1An0g0hIfX7cvcUEOHiCbstefhAi8AkI9muDqfa2GStOAp5lSdyRs2/MJCr2K7jVNgXfzAg+RarKMpbM9gNAMxL4Qa4O6lwrng5ynL9TUX28uvA4ceLNTycjX/WQdR1EiQf6zS6N/DqxFrCzTE/2JEY4fnaKTt9bmpYMvF+yGDE5TnmrwtUehqCuN8ViSAOFspr6KP947Fu5Q0gDaZAvhiOoDuSYxe1D04f6N+hdaVtrFvPVHWAXp1rR6oQbVAFxJAoh9sAHpI1Fa/y/x1hWJkRf6DFeyRadJblGQsN6894UFlCL6x5RPvT70sZ8EOx6F1EMJpQIKqN7z2bmMkQmsA1RvQm5ZzGqxiwA8ZyyKpUtVYM31hcH1qwGKIUcGkgp0Sv+BHCjW8prnDEK5SARfgI=
+matrix:
+  include:
+    - rvm: 2.1.0
+      gemfile: gemfiles/rails_4.gemfile
+    - rvm: 2.2.4
+      gemfile: gemfiles/rails_4.gemfile
+    - rvm: 2.2.4
+      gemfile: gemfiles/rails_5.gemfile
