@@ -1,12 +1,16 @@
 module Knock::Authenticable
-  attr_reader :current_user
+  def current_user
+    @current_user ||= begin
+      token = params[:token] ||
+        request.headers['Authorization'].match(/^Bearer (.*)$/)[1]
+
+      Knock::AuthToken.new(token: token).current_user
+    rescue
+      nil
+    end
+  end
 
   def authenticate
-    begin
-      token = params[:token] || request.headers['Authorization'].split(' ').last
-      @current_user = Knock::AuthToken.new(token: token).current_user
-    rescue
-      head :unauthorized
-    end
+    head :unauthorized unless current_user
   end
 end
