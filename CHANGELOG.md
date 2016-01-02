@@ -2,6 +2,7 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+<<<<<<< HEAD
 ## [2.0.0] - Unreleased
 
 ### Upgrade from 1.3
@@ -48,6 +49,11 @@ end
 This method takes the token payload in argument.
 If the user cannot be found, it should return a falsly value (`nil` or `false`) or raise an exception.
 In both case, knock will respond with `head :unauthorized`.
+=======
+## [Unreleased]
+### Changed
+- Allow use of rails versions above 4.2
+>>>>>>> 5fb776c... Allow use of rails versions above 4.2
 
 ### Added
 - Handle multiple types of user models (useful if you need admin users for example).
