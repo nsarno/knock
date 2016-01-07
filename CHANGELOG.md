@@ -70,6 +70,13 @@ In both case, knock will respond with `head :unauthorized`.
 - `Knock.current_user_from_token`
 - No need to mount the engine anymore.
 
+## [1.4.0] - 2016-01-02
+### Changed
+- Allow use of rails versions above 4.2
+
+### Fixed
+- Audience verification in token
+
 ## [1.3.0] - 2015-07-23
 ### Added
 - Configuration option for how the current_user is retrieved when signing in.
