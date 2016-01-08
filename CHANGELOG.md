@@ -32,7 +32,6 @@ This method takes the parameters from the controller (`params.require(:auth).per
 If the user cannot be found, it should return a falsy value (`nil` or `false`).
 If you raise an exception here, it is your responsability to rescue it and act accordingly.
 
-
 If you have a custom value set for `Knock.current_user_from_token`:
 
 - Remove it from the `config/initializers/knock.rb`.
@@ -69,6 +68,10 @@ In both case, knock will respond with `head :unauthorized`.
 - `Knock.current_user_from_handle`
 - `Knock.current_user_from_token`
 - No need to mount the engine anymore.
+
+## [1.4.1] - 2016-01-08
+### Fixed
+- Use lambda for audience verification
 
 ## [1.4.0] - 2016-01-02
 ### Changed
