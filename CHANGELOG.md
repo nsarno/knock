@@ -2,9 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [1.4.1] - 2016-01-08
 ### Fixed
-- Fixed audience verification in token (was not working with lambdas)
+- Use lambda for audience verification
 
 ## [1.4.0] - 2016-01-02
 ### Changed
