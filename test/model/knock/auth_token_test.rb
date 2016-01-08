@@ -38,7 +38,7 @@ module Knock
     end
 
     test "verify audience when token_audience is present" do
-      Knock.token_audience = 'bar'
+      Knock.token_audience = -> { 'bar' }
       key = Knock.token_secret_signature_key.call
 
       token = JWT.encode({sub: 'foo'}, key, 'HS256')

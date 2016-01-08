@@ -38,14 +38,22 @@ module Knock
     def claims
       {
         exp: Knock.token_lifetime.from_now.to_i,
-        aud: Knock.token_audience
+        aud: token_audience
       }
     end
 
     def verify_claims
       {
-        aud: Knock.token_audience, verify_aud: Knock.token_audience.present?
+        aud: token_audience, verify_aud: verify_audience?
       }
+    end
+
+    def token_audience
+      verify_audience? && Knock.token_audience.call
+    end
+
+    def verify_audience?
+      Knock.token_audience.present?
     end
   end
 end
