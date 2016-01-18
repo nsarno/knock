@@ -158,7 +158,7 @@ e.g.
 class MyResourcesControllerTest < ActionController::TestCase
   def authenticate
     token = Knock::AuthToken.new(payload: { sub: users(:one).id }).token
-    request.env['HTTP_AUTHORIZATION'] = "bearer #{token}"
+    request.env['HTTP_AUTHORIZATION'] = "Bearer #{token}"
   end
 
   setup do
