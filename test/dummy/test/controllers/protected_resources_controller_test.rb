@@ -43,4 +43,20 @@ class ProtectedResourcesControllerTest < ActionController::TestCase
     assert_response :success
     assert @controller.current_user.id == @user.id
   end
+
+  test "accepts any prefix in the authorization header" do
+    @request.env['HTTP_AUTHORIZATION'] = "Other #{@token}"
+
+    get :index
+
+    assert_response :success
+  end
+
+  test "accepts authorization header without prefix" do
+    @request.env['HTTP_AUTHORIZATION'] = "#{@token}"
+
+    get :index
+
+    assert_response :success
+  end
 end

@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.4.2] - 2016-01-29
+### Fixed
+- Allow use of any or no prefix in authorization header.
+This fixes an unwanted breaking change introduced in `1.4.0` forcing the use
+of the `Bearer` prefix.
+
 ## [1.4.1] - 2016-01-08
 ### Fixed
 - Use lambda for audience verification
