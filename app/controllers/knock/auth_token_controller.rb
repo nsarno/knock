@@ -23,8 +23,8 @@ module Knock
 
     def resource
       @resource ||= 
-        if resource_class.respond_to? :find_for_authentication
-          resource_class.find_for_authentication auth_params
+        if resource_class.respond_to? :find_for_token_creation
+          resource_class.find_for_token_creation auth_params
         else
           resource_class.find_by email: auth_params[:email]
         end
