@@ -80,11 +80,11 @@ Rails.application.routes.draw do
 end
 ```
 
-Then include the `Knock::Authenticable` module in your `ApplicationController`
+Then include the `Knock::Authenticatable` module in your `ApplicationController`
 
 ```ruby
 class ApplicationController < ActionController::API
-  include Knock::Authenticable
+  include Knock::Authenticatable
 end
 ```
 

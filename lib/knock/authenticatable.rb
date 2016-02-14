@@ -1,4 +1,4 @@
-module Knock::Authenticable
+module Knock::Authenticatable
   def current_user
     @current_user ||= begin
       token = params[:token] || request.headers['Authorization'].split.last

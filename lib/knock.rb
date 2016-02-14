@@ -1,4 +1,5 @@
 require "knock/engine"
+require "knock/authenticatable"
 
 module Knock
 
@@ -30,5 +31,28 @@ module Knock
   # a fresh initializer with all configuration values.
   def self.setup
     yield self
+  end
+
+  def self.const_missing(const_name)
+    valid_const = deprecated_constants[const_name]
+    const_warning(const_name) if valid_const
+    valid_const || super
+  end
+
+  def self.deprecated_constants
+    {
+      Authenticable: Authenticatable,
+    }
+  end
+
+  private
+
+  def self.const_warning(const_name)
+    @const_warning ||= false
+    unless @const_warning
+      $stderr.puts "WARNING: Deprecated reference to constant '#{const_name}'"
+      $stderr.puts "Use '#{deprecated_constants[const_name]}' instead"
+    end
+    @const_warning = true
   end
 end
