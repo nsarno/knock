@@ -5,7 +5,7 @@ module Knock
   private
 
     def not_found
-      head :not_found
+      head :unauthorized
     end
   end
 end
