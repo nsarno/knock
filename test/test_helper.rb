@@ -39,9 +39,5 @@ class ActiveSupport::TestCase
     Knock.token_secret_signature_key = -> { Rails.application.secrets.secret_key_base }
     Knock.token_public_key = nil
     Knock.token_audience = nil
-
-    Knock.current_user_from_handle = -> handle { User.find_by(Knock.handle_attr => handle) || raise(Knock::MyCustomException) }
-    Knock.current_user_from_token = -> claims { User.find_by(id: claims['sub']) || raise(Knock::MyCustomException) }
-    Knock.not_found_exception_class_name = 'Knock::MyCustomException'
   end
 end
