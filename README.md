@@ -172,6 +172,24 @@ class MyResourcesControllerTest < ActionController::TestCase
 end
 ```
 
+#### Without ActiveRecord
+
+If no ActiveRecord is used, then you will need to specify what Exception will be used when the user is not found with the given credentials.
+
+```ruby
+Knock.setup do |config|
+
+  # Exception Class
+  # ---------------
+  #
+  # Configure the Exception to be used (raised and rescued) for User Not Found.
+  # note: change this if ActiveRecord is not being used.
+  #
+  # Default:
+  config.not_found_exception_class_name = 'MyCustomException'
+end
+```
+
 ### Algorithms
 
 The JWT spec supports different kind of cryptographic signing algorithms.

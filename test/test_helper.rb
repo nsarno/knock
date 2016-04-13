@@ -22,6 +22,11 @@ if ActiveSupport::TestCase.respond_to?(:fixture_path=)
   ActiveSupport::TestCase.fixtures :all
 end
 
+module Knock
+  class MyCustomException < StandardError
+  end
+end
+
 # Make sure knock global configuration is reset before every tests
 # to avoid order dependent failures.
 class ActiveSupport::TestCase
@@ -34,5 +39,9 @@ class ActiveSupport::TestCase
     Knock.token_secret_signature_key = -> { Rails.application.secrets.secret_key_base }
     Knock.token_public_key = nil
     Knock.token_audience = nil
+
+    Knock.current_user_from_handle = -> handle { User.find_by(Knock.handle_attr => handle) || raise(Knock::MyCustomException) }
+    Knock.current_user_from_token = -> claims { User.find_by(id: claims['sub']) || raise(Knock::MyCustomException) }
+    Knock.not_found_exception_class_name = 'Knock::MyCustomException'
   end
 end

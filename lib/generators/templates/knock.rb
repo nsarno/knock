@@ -18,7 +18,9 @@ Knock.setup do |config|
   ## AuthTokenController parameters. It also uses the same variable to enforce
   ## permitted values in the controller.
   ##
-  ## You must raise ActiveRecord::RecordNotFound if the resource cannot be retrieved.
+  ## You must raise an exception if the resource cannot be retrieved.
+  ## The type of the exception is configured in config.not_found_exception_class_name,
+  ## and it is ActiveRecord::RecordNotFound by default
   ##
   ## Default:
   # config.current_user_from_handle = -> (handle) { User.find_by! Knock.handle_attr => handle }
@@ -30,7 +32,9 @@ Knock.setup do |config|
   ## By default, it assumes you have a model called `User` and that
   ## the user_id is stored in the 'sub' claim.
   ##
-  ## You must raise ActiveRecord::RecordNotFound if the resource cannot be retrieved.
+  ## You must raise an exception if the resource cannot be retrieved.
+  ## The type of the exception is configured in config.not_found_exception_class_name,
+  ## and it is ActiveRecord::RecordNotFound by default
   ##
   ## Default:
   # config.current_user_from_token = -> (claims) { User.find claims['sub'] }
@@ -83,4 +87,13 @@ Knock.setup do |config|
   ##
   ## Default:
   # config.token_public_key = nil
+
+  ## Exception Class
+  ## ---------------
+  ##
+  ## Configure the Exception to be used (raised and rescued) for User Not Found.
+  ## note: change this if ActiveRecord is not being used.
+  ##
+  ## Default:
+  # config.not_found_exception_class_name = 'ActiveRecord::RecordNotFound'
 end
