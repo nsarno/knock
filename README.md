@@ -123,6 +123,8 @@ class CurrentUsersController < ApplicationController
 end
 ```
 
+Note that the `authenticate` method depends upon the `current_user` method. Overwriting `current_user` in the controller may break the `authenticate` method.
+
 ### Authenticating from a web or mobile application:
 
 Example request to get a token from your API:
