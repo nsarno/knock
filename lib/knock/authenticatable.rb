@@ -32,7 +32,7 @@ module Knock::Authenticatable
   end
 
   def define_current_resource_getter resource_class
-    self.class.send(:define_method, "current_#{resource_class.to_s.downcase}") do
+    self.class.send(:define_method, "current_#{resource_class.to_s.underscore}") do
       @resource
     end
   end
