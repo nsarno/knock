@@ -15,5 +15,17 @@ class TokenControllerGeneratorTest < Rails::Generators::TestCase
 
     run_generator ['Admin']
     assert_file "app/controllers/user_token_controller.rb"
+
+    run_generator ['AdminUser']
+    assert_file "app/controllers/admin_user_token_controller.rb"
+
+    require File.join(destination_root, "app/controllers/admin_user_token_controller.rb")
+    assert Object.const_defined?('AdminUserTokenController'), 'uninitialized constant AdminUserTokenController'
+
+    run_generator ['user_admin']
+    assert_file "app/controllers/user_admin_token_controller.rb"
+
+    require File.join(destination_root, "app/controllers/user_admin_token_controller.rb")
+    assert Object.const_defined?('UserAdminTokenController'), 'uninitialized constant UserAdminTokenController'
   end
 end
