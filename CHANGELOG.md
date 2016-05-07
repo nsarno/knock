@@ -4,6 +4,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 - adding config options for exception class
+- possibility to have custom claims
 
 ## [1.4.2] - 2016-01-29
 ### Fixed
@@ -65,4 +66,3 @@ of the `Bearer` prefix.
 - `Knock::Authenticable` to secure endpoints with `before_action :authenticate`
 - `AuthToken` model provides JWT encapsulation
 - `AuthTokenController` provides out of the box sign in implementation
-

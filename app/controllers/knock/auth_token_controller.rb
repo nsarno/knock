@@ -14,7 +14,11 @@ module Knock
     end
 
     def auth_token
-      AuthToken.new payload: { sub: user.id }
+      claims = { sub: user.id }
+      custom_claims = Knock.custom_claims.call(user)
+      merged_claims = custom_claims.is_a?(Hash) ? custom_claims.merge(claims) : claims
+
+      AuthToken.new payload: merged_claims
     end
 
     def user

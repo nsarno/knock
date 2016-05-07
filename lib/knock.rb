@@ -23,6 +23,9 @@ module Knock
   mattr_accessor :token_secret_signature_key
   self.token_secret_signature_key = -> { Rails.application.secrets.secret_key_base }
 
+  mattr_accessor :custom_claims
+  self.custom_claims = ->(resource) { Hash.new }
+
   mattr_accessor :token_public_key
   self.token_public_key = nil
 

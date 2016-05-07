@@ -7,4 +7,6 @@ Knock.setup do |config|
   config.current_user_from_handle = -> handle { User.find_by(Knock.handle_attr => handle) || raise(Knock::MyCustomException) }
   config.current_user_from_token = -> claims { User.find_by(id: claims['sub']) || raise(Knock::MyCustomException) }
   config.not_found_exception_class_name = 'Knock::MyCustomException'
+
+  config.custom_claims = -> (resource) { { name: resource.name } if resource.respond_to?(:name) }
 end

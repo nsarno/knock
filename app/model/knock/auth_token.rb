@@ -3,6 +3,7 @@ require 'jwt'
 module Knock
   class AuthToken
     attr_reader :token
+    attr_reader :payload
 
     def initialize payload: {}, token: nil
       if token.present?
