@@ -11,11 +11,13 @@ Knock.setup do |config|
   ## Custom claim
   ## ------------
   ##
-  ## Add the custom claims you want in the token's payload, it should be a Hash
-  ## sub (resource id) will always be included (you can't overwrite it)
+  ## Add the cusom claims you want in the token's payload, it should be a Hash.
+  ## sub (resource id) will always be included (and you can't overwrite it)
   ##
   ## Default:
-  # config.custom_claims = -> (resource) { Hash.new }
+  # config.custom_claims = -> (resource) { { roles: resource.roles } }
+  config.custom_claims = -> (resource) { { name: resource.name } if resource.respond_to?(:name) }
+
 
   ## Audience claim
   ## --------------

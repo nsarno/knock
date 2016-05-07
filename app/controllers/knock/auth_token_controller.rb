@@ -14,7 +14,11 @@ module Knock
     end
 
     def auth_token
-      AuthToken.new payload: { sub: resource.id }
+      claims = { sub: resource.id }
+      custom_claims = Knock.custom_claims.call(resource)
+      merged_claims = custom_claims.is_a?(Hash) ? custom_claims.merge(claims) : claims
+
+      AuthToken.new payload: merged_claims
     end
 
     def auth_params
@@ -22,7 +26,7 @@ module Knock
     end
 
     def resource
-      @resource ||= 
+      @resource ||=
         if resource_class.respond_to? :find_for_token_creation
           resource_class.find_for_token_creation auth_params
         else
