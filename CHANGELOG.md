@@ -2,7 +2,6 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-<<<<<<< HEAD
 ## [2.0.0] - Unreleased
 
 ### Upgrade from 1.3
@@ -49,19 +48,10 @@ end
 This method takes the token payload in argument.
 If the user cannot be found, it should return a falsly value (`nil` or `false`) or raise an exception.
 In both case, knock will respond with `head :unauthorized`.
-=======
-## [Unreleased]
-### Changed
-- Allow use of rails versions above 4.2
->>>>>>> 5fb776c... Allow use of rails versions above 4.2
 
 ### Added
 - Handle multiple types of user models (useful if you need admin users for example).
 - Token controller generator (for signing in): `knock:token_controller`. Multiple user models means we need one token controller per user type.
-- Travis integration
-- Contribution guidelines
-- URL authentication
-- Allow use of different encoding algorithm
 
 ### Changed
 - Rename `Knock::Authenticable` to `Knock::Authenticatable`.
@@ -82,6 +72,9 @@ In both case, knock will respond with `head :unauthorized`.
 ## [1.4.0] - 2016-01-02
 ### Changed
 - Allow use of rails versions above 4.2
+- Allow use of different encoding algorithm
+- Travis integration
+- Contribution guidelines
 
 ### Fixed
 - Audience verification in token
