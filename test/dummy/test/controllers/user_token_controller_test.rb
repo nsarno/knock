@@ -18,6 +18,13 @@ class UserTokenControllerTest < ActionController::TestCase
   test "responds with 201" do
     post :create, auth: { email: @user.email, password: 'secret' }
     assert_response :created
-    assert JSON.parse(response.body).keys.include?('jwt')
+    assert JSON.parse(response.body).has_key?('jwt')
+  end
+
+  test "the JWT contains the custom claims" do
+    post :create, auth: { email: @user.email, password: 'secret' }
+
+    jwt = JSON.parse(response.body)['jwt']
+    assert Knock::AuthToken.new(token: jwt).payload.has_key?('name')
   end
 end
