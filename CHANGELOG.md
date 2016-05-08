@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## Unreleased
+- adding config options for exception class
+
 ## [1.4.2] - 2016-01-29
 ### Fixed
 - Allow use of any or no prefix in authorization header.

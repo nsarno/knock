@@ -10,6 +10,10 @@ module Knock
       @user ||= users(:one)
     end
 
+    test "it's using configured custom exception" do
+      assert_equal Knock.not_found_exception_class, Knock::MyCustomException
+    end
+
     test "responds with 404 if user does not exist" do
       post :create, auth: { email: 'wrong@example.net', password: '' }
       assert_response :not_found

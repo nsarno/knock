@@ -22,6 +22,11 @@ if ActiveSupport::TestCase.respond_to?(:fixture_path=)
   ActiveSupport::TestCase.fixtures :all
 end
 
+module Knock
+  class MyCustomException < StandardError
+  end
+end
+
 # Make sure knock global configuration is reset before every tests
 # to avoid order dependent failures.
 class ActiveSupport::TestCase
