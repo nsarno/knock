@@ -1,5 +1,6 @@
 require 'test_helper'
 require 'jwt'
+require 'timecop'
 
 module Knock
   class AuthTokenTest < ActiveSupport::TestCase
@@ -46,6 +47,24 @@ module Knock
       assert_raises(JWT::InvalidAudError) {
         AuthToken.new token: token
       }
+    end
+
+    test "validate expiration claim by default" do
+      token = Knock::AuthToken.new(payload: { sub: 'foo' }).token
+      Timecop.travel(25.hours.from_now) do
+        assert_raises(JWT::ExpiredSignature) {
+          Knock::AuthToken.new(token: token)
+        }
+      end
+    end
+
+    test "does not validate expiration claim with a nil token_lifetime" do
+      Knock.token_lifetime = nil
+
+      token = Knock::AuthToken.new(payload: { sub: 'foo' }).token
+      Timecop.travel(10.years.from_now) do
+        assert_not Knock::AuthToken.new(token: token).payload.has_key?('exp')
+      end
     end
   end
 end
