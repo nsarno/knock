@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [2.0.0] - Unreleased
+## Added
+- Possibility to have permanent tokens
 
 ### Upgrade from 1.3
 
@@ -31,7 +33,6 @@ end
 This method takes the parameters from the controller (`params.require(:auth).permit!`) in argument.
 If the user cannot be found, it should return a falsy value (`nil` or `false`).
 If you raise an exception here, it is your responsability to rescue it and act accordingly.
-
 
 If you have a custom value set for `Knock.current_user_from_token`:
 
@@ -65,6 +66,20 @@ In both case, knock will respond with `head :unauthorized`.
 - `Knock.current_user_from_handle`
 - `Knock.current_user_from_token`
 - No need to mount the engine anymore.
+
+## [1.4.1] - 2016-01-08
+### Fixed
+- Use lambda for audience verification
+
+## [1.4.0] - 2016-01-02
+### Changed
+- Allow use of rails versions above 4.2
+- Allow use of different encoding algorithm
+- Travis integration
+- Contribution guidelines
+
+### Fixed
+- Audience verification in token
 
 ## [1.3.0] - 2015-07-23
 ### Added
@@ -100,4 +115,3 @@ In both case, knock will respond with `head :unauthorized`.
 - `Knock::Authenticable` to secure endpoints with `before_action :authenticate`
 - `AuthToken` model provides JWT encapsulation
 - `AuthTokenController` provides out of the box sign in implementation
-

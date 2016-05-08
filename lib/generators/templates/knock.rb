@@ -3,7 +3,8 @@ Knock.setup do |config|
   ## Expiration claim
   ## ----------------
   ##
-  ## How long before a token is expired.
+  ## How long before a token is expired. If nil is provided, token will
+  ## last forever.
   ##
   ## Default:
   # config.token_lifetime = 1.day
@@ -21,6 +22,13 @@ Knock.setup do |config|
   ## If using Auth0, uncomment the line below
   # config.token_audience = -> { Rails.application.secrets.auth0_client_id }
 
+  ## Signature algorithm
+  ## -------------------
+  ##
+  ## Configure the algorithm used to encode the token
+  ##
+  ## Default:
+  # config.token_signature_algorithm = 'HS256'
 
   ## Signature key
   ## -------------
@@ -33,4 +41,11 @@ Knock.setup do |config|
   ## If using Auth0, uncomment the line below
   # config.token_secret_signature_key = -> { JWT.base64url_decode Rails.application.secrets.auth0_client_secret }
 
+  ## Public key
+  ## ----------
+  ##
+  ## Configure the public key used to decode tokens, if required.
+  ##
+  ## Default:
+  # config.token_public_key = nil
 end
