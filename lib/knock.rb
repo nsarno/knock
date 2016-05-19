@@ -1,16 +1,6 @@
 require "knock/engine"
 
 module Knock
-
-  mattr_accessor :handle_attr
-  self.handle_attr = :email
-
-  mattr_accessor :current_user_from_handle
-  self.current_user_from_handle = -> handle { User.find_by! Knock.handle_attr => handle }
-
-  mattr_accessor :current_user_from_token
-  self.current_user_from_token = -> claims { User.find claims['sub'] }
-
   mattr_accessor :token_lifetime
   self.token_lifetime = 1.day
 

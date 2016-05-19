@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
-  resources :protected_resources
+  post 'admin_user_token' => 'admin_user_token#create'
+  post 'user_token' => 'user_token#create'
+  post 'admin_token' => 'admin_token#create'
+
+  resources :user_protected
+  resources :admin_protected
+  resources :admin_user_protected
   resource :current_user
-  mount Knock::Engine => "/knock"
 end
