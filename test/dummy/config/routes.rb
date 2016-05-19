@@ -6,4 +6,5 @@ Rails.application.routes.draw do
   resources :user_protected
   resources :admin_protected
   resources :admin_user_protected
+  resource :current_user
 end

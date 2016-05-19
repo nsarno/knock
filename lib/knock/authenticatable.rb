@@ -2,14 +2,14 @@ module Knock::Authenticatable
 
   def authenticate_for resource_class
     token = token_from_request_headers
-    return head(:unauthorized) if token.nil?
+    return nil if token.nil?
 
     begin
       @resource = Knock::AuthToken.new(token: token).resource(resource_class)
-      return head(:unauthorized) unless @resource
       define_current_resource_getter(resource_class)
+      @resource
     rescue
-      return head(:unauthorized)
+      nil
     end
   end
 
@@ -17,7 +17,11 @@ module Knock::Authenticatable
 
   def method_missing(method, *args)
     prefix, *parts = method.to_s.split('_')
-    if prefix == 'authenticate'
+    case prefix
+    when 'authenticate'
+      resource_class = constant_from_parts(parts)
+      head(:unauthorized) unless send(:authenticate_for, resource_class)
+    when 'current'
       resource_class = constant_from_parts(parts)
       send(:authenticate_for, resource_class)
     else
@@ -32,8 +36,11 @@ module Knock::Authenticatable
   end
 
   def define_current_resource_getter resource_class
-    self.class.send(:define_method, "current_#{resource_class.to_s.underscore}") do
-      @resource
+    getter_name = "current_#{resource_class.to_s.underscore}"
+    unless self.respond_to?(getter_name)
+      self.class.send(:define_method, getter_name) do
+        @resource ||= nil
+      end
     end
   end
 
