@@ -25,6 +25,9 @@ Knock.setup do |config|
   ## Default:
   # config.current_user_from_handle = -> (handle) { User.find_by! Knock.handle_attr => handle }
 
+  ## [DEPRECATED]
+  ## This variable is deprecated. Implement `User.find_for_authentication` instead.
+  ##
   ## Current user retrieval when validating token
   ## --------------------------------------------
   ##

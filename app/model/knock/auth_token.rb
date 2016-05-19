@@ -17,8 +17,20 @@ module Knock
       end
     end
 
-    def current_user
-      @current_user ||= Knock.current_user_from_token.call @payload
+    def entity_for entity_class
+      if entity_class.respond_to? :find_for_authentication
+        entity_class.find_for_authentication @payload
+      else
+        if entity_class.to_s == "User" && Knock.respond_to?(:current_user_from_token)
+          warn <<-WARNING
+            [DEPRECATION]: `Knock.current_user_from_token` is deprecated. Please
+            implement `User.find_for_authentication` instead.
+          WARNING
+          Knock.current_user_from_token.call @payload
+        else
+          entity_class.find @payload['sub']
+        end
+      end
     end
 
   private

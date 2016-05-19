@@ -26,13 +26,6 @@ Knock is an authentication solution for Rails API-only application based on JSON
 
 Yes.
 
-### Upcoming features & improvements
-
-- Easy way to authenticate multiple user types (User, Admin, ...)
-- Remove ActiveRecord dependency
-
-Really want some feature? Don't hesitate to open an issue :)
-
 ## Getting Started
 
 ### Installation
