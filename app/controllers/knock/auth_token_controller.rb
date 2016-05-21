@@ -2,23 +2,47 @@ require_dependency "knock/application_controller"
 
 module Knock
   class AuthTokenController < ApplicationController
-    before_action :authenticate!
+    before_action :authenticate
 
     def create
       render json: auth_token, status: :created
     end
 
   private
-    def authenticate!
-      raise Knock.not_found_exception_class unless user.authenticate(auth_params[:password])
+    def authenticate
+      unless entity.present? && entity.authenticate(auth_params[:password])
+        raise Knock.not_found_exception_class
+      end
     end
 
     def auth_token
-      AuthToken.new payload: { sub: user.id }
+      AuthToken.new payload: { sub: entity.id }
     end
 
-    def user
-      Knock.current_user_from_handle.call auth_params[Knock.handle_attr]
+    def entity
+      @entity ||=
+        if self.class.name == "Knock::AuthTokenController"
+          warn <<-WARNING
+            [DEPRECATION]: Routing to `AuthTokenController` directly is deprecated.
+            Please use `<Entity Name>TokenController` inheriting from it instead.
+            E.g. `UserTokenController`
+          WARNING
+          Knock.current_user_from_handle.call auth_params[Knock.handle_attr]
+        else
+          if entity_class.respond_to? :find_for_token_creation
+            entity_class.find_for_token_creation auth_params
+          else
+            entity_class.find_by email: auth_params[:email]
+          end
+        end
+    end
+
+    def entity_class
+      entity_name.constantize
+    end
+
+    def entity_name
+      self.class.name.split('TokenController').first
     end
 
     def auth_params
