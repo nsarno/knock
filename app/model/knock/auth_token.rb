@@ -33,6 +33,10 @@ module Knock
       end
     end
 
+    def to_json options = {}
+      {jwt: @token}.to_json
+    end
+
   private
     def secret_key
       Knock.token_secret_signature_key.call
