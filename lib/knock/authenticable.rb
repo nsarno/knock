@@ -20,17 +20,20 @@ module Knock::Authenticable
   private
 
   def method_missing(method, *args)
-    prefix, *parts = method.to_s.split('_')
+    prefix, entity_name = method.to_s.split('_')
     case prefix
     when 'authenticate'
-      entity_class = constant_from_parts(parts)
-      head(:unauthorized) unless send(:authenticate_for, entity_class)
+      head(:unauthorized) unless authenticate_entity(entity_name)
     when 'current'
-      entity_class = constant_from_parts(parts)
-      send(:authenticate_for, entity_class)
+      authenticate_entity(entity_name)
     else
       super
     end
+  end
+
+  def authenticate_entity(entity_name)
+    entity_class = entity_name.camelize.constantize
+    send(:authenticate_for, entity_class)
   end
 
   def token_from_request_headers
@@ -46,12 +49,5 @@ module Knock::Authenticable
         @entity ||= nil
       end
     end
-  end
-
-  # Not rescuing from NameError on purpose.
-  # If trying to use `authenticate_user` but no `User` constant exists,
-  # it makes more sense to raise NameError than NoMethodError.
-  def constant_from_parts parts
-    parts.map(&:capitalize).join.constantize
   end
 end
