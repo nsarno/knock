@@ -12,7 +12,7 @@ class AdminProtectedControllerTest < ActionController::TestCase
     @request.env['HTTP_AUTHORIZATION'] = "Bearer #{@token}"
   end
 
-  def invalid_resource_auth
+  def invalid_entity_auth
     @token = Knock::AuthToken.new(payload: { sub: 0 }).token
     @request.env['HTTP_AUTHORIZATION'] = "Bearer #{@token}"
   end
@@ -28,8 +28,8 @@ class AdminProtectedControllerTest < ActionController::TestCase
     assert_response :unauthorized
   end
 
-  test "responds with unauthorized to invalid resource" do
-    invalid_resource_auth
+  test "responds with unauthorized to invalid entity" do
+    invalid_entity_auth
     get :index
     assert_response :unauthorized
   end
