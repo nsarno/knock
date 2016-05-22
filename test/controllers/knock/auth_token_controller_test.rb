@@ -28,5 +28,12 @@ module Knock
       post :create, auth: { email: user.email, password: 'secret' }
       assert_response :created
     end
+
+    test "the JWT contains the custom claims" do
+      post :create, auth: { email: user.email, password: 'secret' }
+
+      jwt = JSON.parse(response.body)['jwt']
+      assert_equal user.name, Knock::AuthToken.new(token: jwt).payload['name']
+    end
   end
 end

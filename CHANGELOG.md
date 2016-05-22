@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## Added
 - Possibility to have permanent tokens
 - adding config options for exception class
+- possibility to have custom claims
 
 ## [1.4.2] - 2016-01-29
 ### Fixed

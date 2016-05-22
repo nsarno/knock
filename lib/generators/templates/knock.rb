@@ -49,6 +49,15 @@ Knock.setup do |config|
   ## Default:
   # config.token_lifetime = 1.day
 
+  ## Custom claim
+  ## ------------
+  ##
+  ## Add the custom claims you want in the token's payload, should be a lambda
+  ## that accepts the user and returns a Hash, sub (resource id) will always be
+  ## included (you can't overwrite it)
+  ##
+  ## Default:
+  # config.custom_claims = -> (resource) { Hash.new }
 
   ## Audience claim
   ## --------------
