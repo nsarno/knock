@@ -1,7 +1,7 @@
 # Contributing Guidelines
 
 Contribution is always highly appreciated. Here are a few guidelines to make it
-easier and faster for pull requests to get merged and issues to get fixed. 
+easier and faster for pull requests to get merged and issues to get fixed.
 
 ### Issues
 
