@@ -1,5 +1,8 @@
 Knock.setup do |config|
 
+  ## [DEPRECATED]
+  ## This is deprecated in favor of `User.find_for_token_creation`.
+  ##
   ## User handle attribute
   ## ---------------------
   ##
@@ -8,6 +11,9 @@ Knock.setup do |config|
   ## Default:
   # config.handle_attr = :email
 
+  ## [DEPRECATED]
+  ## This is deprecated in favor of `User.find_for_token_creation`.
+  ##
   ## Current user retrieval from handle when signing in
   ## --------------------------------------------------
   ##
@@ -26,7 +32,7 @@ Knock.setup do |config|
   # config.current_user_from_handle = -> (handle) { User.find_by! Knock.handle_attr => handle }
 
   ## [DEPRECATED]
-  ## This variable is deprecated. Implement `User.find_for_authentication` instead.
+  ## This is depreacted in favor of `User.find_for_authentication`.
   ##
   ## Current user retrieval when validating token
   ## --------------------------------------------
