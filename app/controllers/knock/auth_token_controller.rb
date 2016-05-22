@@ -8,7 +8,7 @@ module Knock
       render json: { jwt: auth_token.token }, status: :created
     end
 
-  private
+  protected
     def authenticate!
       raise Knock.not_found_exception_class unless user.authenticate(auth_params[:password])
     end
