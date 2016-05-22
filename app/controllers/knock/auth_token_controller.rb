@@ -27,7 +27,7 @@ module Knock
           Knock.current_user_from_handle.call auth_params[Knock.handle_attr]
         else
           if entity_class.respond_to? :find_for_token_creation
-            entity_class.find_for_token_creation auth_params
+            entity_class.find_for_token_creation request
           else
             entity_class.find_by email: auth_params[:email]
           end
