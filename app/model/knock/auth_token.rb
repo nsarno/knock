@@ -3,6 +3,7 @@ require 'jwt'
 module Knock
   class AuthToken
     attr_reader :token
+    attr_reader :payload
 
     def initialize payload: {}, token: nil
       if token.present?
@@ -36,15 +37,25 @@ module Knock
     end
 
     def claims
-      {
-        exp: Knock.token_lifetime.from_now.to_i,
-        aud: token_audience
-      }
+      _claims = {}
+      _claims[:exp] = token_lifetime if verify_lifetime?
+      _claims[:aud] = token_audience if verify_audience?
+      _claims
+    end
+
+    def token_lifetime
+      Knock.token_lifetime.from_now.to_i if verify_lifetime?
+    end
+
+    def verify_lifetime?
+      !Knock.token_lifetime.nil?
     end
 
     def verify_claims
       {
-        aud: token_audience, verify_aud: verify_audience?
+        aud: token_audience,
+        verify_aud: verify_audience?,
+        verify_expiration: verify_lifetime?
       }
     end
 

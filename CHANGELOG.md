@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
+## Added
+- Possibility to have permanent tokens
 - adding config options for exception class
 
 ## [1.4.2] - 2016-01-29
@@ -65,4 +67,3 @@ of the `Bearer` prefix.
 - `Knock::Authenticable` to secure endpoints with `before_action :authenticate`
 - `AuthToken` model provides JWT encapsulation
 - `AuthTokenController` provides out of the box sign in implementation
-
