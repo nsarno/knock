@@ -22,11 +22,8 @@ module Knock
     def entity
       @entity ||=
         if self.class.name == "Knock::AuthTokenController"
-          warn <<-WARNING
-            [DEPRECATION]: Routing to `AuthTokenController` directly is deprecated.
-            Please use `<Entity Name>TokenController` inheriting from it instead.
-            E.g. `UserTokenController`
-          WARNING
+          warn "[DEPRECATION]: Routing to `AuthTokenController` directly is deprecated. Please use `<Entity Name>TokenController` inheriting from it instead. E.g. `UserTokenController`"
+          warn "[DEPRECATION]: Relying on `Knock.current_user_from_handle` is deprecated. Please implement `User#find_for_token_creation` instead."
           Knock.current_user_from_handle.call auth_params[Knock.handle_attr]
         else
           if entity_class.respond_to? :find_for_token_creation

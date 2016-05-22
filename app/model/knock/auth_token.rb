@@ -22,10 +22,7 @@ module Knock
         entity_class.find_for_authentication @payload
       else
         if entity_class.to_s == "User" && Knock.respond_to?(:current_user_from_token)
-          warn <<-WARNING
-            [DEPRECATION]: `Knock.current_user_from_token` is deprecated. Please
-            implement `User.find_for_authentication` instead.
-          WARNING
+          warn "[DEPRECATION]: `Knock.current_user_from_token` is deprecated. Please implement `User.find_for_authentication` instead."
           Knock.current_user_from_token.call @payload
         else
           entity_class.find @payload['sub']

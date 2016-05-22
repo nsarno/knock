@@ -1,9 +1,6 @@
 module Knock::Authenticable
   def authenticate
-    warn <<-WARNING
-      [DEPRECATION]: `authenticate` is deprecated. Please use
-      `authenticate_user` instead.
-    WARNING
+    warn "[DEPRECATION]: `authenticate` is deprecated. Please use `authenticate_user` instead."
     head(:unauthorized) unless authenticate_for(User)
   end
 
