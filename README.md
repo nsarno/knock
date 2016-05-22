@@ -36,7 +36,7 @@ Add this line to your application's Gemfile:
 gem 'knock'
 ```
 
-And then execute:
+Then execute:
 
     $ bundle install
 
@@ -46,6 +46,13 @@ Finally, run the install generator:
 
 It will create the following initializer `config/initializers/knock.rb`.
 This file contains all the informations about the existing configuration options.
+
+If you don't use an external authentication solution like Auth0, you also need to provide a way for users to sign in:
+
+    $ rails generate knock:token_controller user
+
+This will generate the controller `user_token_controller.rb` and add the required route to your `config/routes.rb` file.
+You can also provide another entity instead of `user`. E.g. `admin`
 
 ### Requirements
 
@@ -63,17 +70,7 @@ Using `has_secure_password` is recommended, but you don't have to as long as you
 
 ### Usage
 
-Mount the `Knock::Engine` in your `config/routes.rb`
-
-```ruby
-Rails.application.routes.draw do
-  mount Knock::Engine => "/knock"
-
-  # your routes ...
-end
-```
-
-Then include the `Knock::Authenticable` module in your `ApplicationController`
+Include the `Knock::Authenticable` module in your `ApplicationController`
 
 ```ruby
 class ApplicationController < ActionController::API
@@ -81,12 +78,12 @@ class ApplicationController < ActionController::API
 end
 ```
 
-You can now protect your resources by adding the `authenticate` before_action
-to your controllers like this:
+You can now protect your resources by calling `authenticate_user` as a before_action
+inside your controllers:
 
 ```ruby
-class MyResourcesController < ApplicationController
-  before_action :authenticate
+class SecuredController < ApplicationController
+  before_action :authenticate_user
 
   def index
     # etc...
@@ -96,33 +93,35 @@ class MyResourcesController < ApplicationController
 end
 ```
 
+You can access the currently authenticated user in your controller with `current_user`.
+
 If no valid token is passed with the request, Knock will respond with:
 
 ```
 head :unauthorized
 ```
 
-If you just want to read the `current_user`, without actually authenticating, you can also do that:
+You also have access directly to `current_user` which will try to authenticate or return `nil`:
 
 ```ruby
-class CurrentUsersController < ApplicationController
-  def show
-    if current_user
-      head :ok
-    else
-      head :not_found
-    end
+def index
+  if current_user
+    # do something
+  else
+    # do something else
   end
 end
 ```
 
-Note that the `authenticate` method depends upon the `current_user` method. Overwriting `current_user` in the controller may break the `authenticate` method.
+Note: the `authenticate_user` method uses the `current_user` method. Overwriting `current_user` may cause unexpected behaviours.
+
+You can do the exact same thing for any entity. E.g. for `Admin`, use `authenticate_admin` and `current_admin` instead.
 
 ### Authenticating from a web or mobile application:
 
 Example request to get a token from your API:
 ```
-POST /knock/auth_token
+POST /user_auth_token
 {"auth": {"email": "foo@bar.com", "password": "secret"}}
 ```
 
@@ -150,7 +149,7 @@ To authenticate within your tests:
 e.g.
 
 ```ruby
-class MyResourcesControllerTest < ActionController::TestCase
+class SecuredControllerTest < ActionController::TestCase
   def authenticate
     token = Knock::AuthToken.new(payload: { sub: users(:one).id }).token
     request.env['HTTP_AUTHORIZATION'] = "Bearer #{token}"
