@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resource :current_user
 
   resources :admin_protected
+  resources :composite_name_entity_protected
   resources :vendor_protected
 
   mount Knock::Engine => "/knock"
