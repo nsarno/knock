@@ -9,4 +9,8 @@ class Admin < ActiveRecord::Base
   def self.find_for_authentication payload
     self.find payload["sub"]
   end
+
+  def to_token_payload
+    {sub: id}
+  end
 end
