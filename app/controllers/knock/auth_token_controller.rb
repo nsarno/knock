@@ -27,11 +27,11 @@ module Knock
       @entity ||=
         if self.class.name == "Knock::AuthTokenController"
           warn "[DEPRECATION]: Routing to `AuthTokenController` directly is deprecated. Please use `<Entity Name>TokenController` inheriting from it instead. E.g. `UserTokenController`"
-          warn "[DEPRECATION]: Relying on `Knock.current_user_from_handle` is deprecated. Please implement `User#find_for_token_creation` instead."
+          warn "[DEPRECATION]: Relying on `Knock.current_user_from_handle` is deprecated. Please implement `User#from_token_request` instead."
           Knock.current_user_from_handle.call auth_params[Knock.handle_attr]
         else
-          if entity_class.respond_to? :find_for_token_creation
-            entity_class.find_for_token_creation request
+          if entity_class.respond_to? :from_token_request
+            entity_class.from_token_request request
           else
             entity_class.find_by email: auth_params[:email]
           end

@@ -124,40 +124,45 @@ You can do the exact same thing for any entity. E.g. for `Admin`, use `authentic
 The entity model (e.g. `User`) can implement specific methods to provide
 customization over different part of the authentication process.
 
-- Find the entity when creating the token (when signing in)
+- **Find the entity when creating the token (when signing in)**
 
 By default, Knock tries to find the entity by email. If you want to modify this
-behaviour, implement in your entity model a class method `find_for_token_creation`
+behaviour, implement in your entity model a class method `from_token_request`
 that takes the request in argument.
 
 E.g.
 
 ```ruby
 class User < ActiveRecord::Base
-  def self.find_for_token_creation request
+  def self.from_token_request request
     # Returns a valid user, `nil` or raise `Knock.not_found_exception_class_name`
+    # e.g.
+    #   email = request.params["auth"] && request.params["auth"]["email"]
+    #   self.find_by email: email
   end
 end
 ```
 
-- Find the authenticated entity from the token payload (when authenticating a request)
+- **Find the authenticated entity from the token payload (when authenticating a request)**
 
 By default, Knock assumes the payload as a subject (`sub`) claim containing the entity's id
 and calls `find` on the model. If you want to modify this behaviour, implement in
-your entity model a class method `find_for_authentication` that takes the
+your entity model a class method `from_token_payload` that takes the
 payload in argument.
 
 E.g.
 
 ```ruby
 class User < ActiveRecord::Base
-  def self.find_for_authentication payload
+  def self.from_token_payload payload
     # Returns a valid user, `nil` or raise
+    # e.g.
+    #   self.find payload["sub"]
   end
 end
 ```
 
-- Modify the token payload
+- **Modify the token payload**
 
 By default the token payload contains the entity's id inside the subject (`sub`) claim.
 If you want to modify this behaviour, implement in your entity model an instance method

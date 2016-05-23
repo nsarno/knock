@@ -12,7 +12,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 - Deprecated `Authenticable#authenticate` in favor of `Authenticable#authenticate_user`
-- Deprecated use of `Knock.current_user_from_token` in favor of `User.find_for_authentication`
+- Deprecated use of `Knock.current_user_from_token` in favor of `User.from_token_payload`
 - Deprecated use of direct route to `AuthTokenController` in favor of generating  a token controller
 - No need to mount the engine in `config/routes.rb` anymore
 

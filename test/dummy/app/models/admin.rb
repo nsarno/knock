@@ -1,12 +1,12 @@
 class Admin < ActiveRecord::Base
   has_secure_password
 
-  def self.find_for_token_creation request
-    params = request.params["auth"]
-    self.find_by email: params["email"]
+  def self.from_token_request request
+    email = request.params["auth"] && request.params["auth"]["email"]
+    self.find_by email: email
   end
 
-  def self.find_for_authentication payload
+  def self.from_token_payload payload
     self.find payload["sub"]
   end
 
