@@ -93,7 +93,7 @@ class SecuredController < ApplicationController
 end
 ```
 
-You can access the currently authenticated user in your controller with `current_user`.
+You can access the current user in your controller with `current_user`.
 
 If no valid token is passed with the request, Knock will respond with:
 
@@ -113,7 +113,7 @@ def index
 end
 ```
 
-Note: the `authenticate_user` method uses the `current_user` method. Overwriting `current_user` may cause unexpected behaviours.
+Note: the `authenticate_user` method uses the `current_user` method. Overwriting `current_user` may cause unexpected behaviour.
 
 You can do the exact same thing for any entity. E.g. for `Admin`, use `authenticate_admin` and `current_admin` instead.
 
@@ -122,12 +122,12 @@ You can do the exact same thing for any entity. E.g. for `Admin`, use `authentic
 #### Via the entity model
 
 The entity model (e.g. `User`) can implement specific methods to provide
-customization over different part of the authentication process.
+customization over different parts of the authentication process.
 
 - **Find the entity when creating the token (when signing in)**
 
 By default, Knock tries to find the entity by email. If you want to modify this
-behaviour, implement in your entity model a class method `from_token_request`
+behaviour, implement within your entity model a class method `from_token_request`
 that takes the request in argument.
 
 E.g.
@@ -146,7 +146,7 @@ end
 - **Find the authenticated entity from the token payload (when authenticating a request)**
 
 By default, Knock assumes the payload as a subject (`sub`) claim containing the entity's id
-and calls `find` on the model. If you want to modify this behaviour, implement in
+and calls `find` on the model. If you want to modify this behaviour, implement within
 your entity model a class method `from_token_payload` that takes the
 payload in argument.
 
@@ -165,7 +165,7 @@ end
 - **Modify the token payload**
 
 By default the token payload contains the entity's id inside the subject (`sub`) claim.
-If you want to modify this behaviour, implement in your entity model an instance method
+If you want to modify this behaviour, implement within your entity model an instance method
 `to_token_payload` that returns a hash representing the payload.
 
 E.g.
@@ -198,7 +198,7 @@ Example response from the API:
 {"jwt": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9"}
 ```
 
-To make an authenticated request to your API, you need to pass the token in the request header:
+To make an authenticated request to your API, you need to pass the token via the request header:
 ```
 Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9
 GET /my_resources
