@@ -101,8 +101,7 @@ Knock.setup do |config|
   ## Exception Class
   ## ---------------
   ##
-  ## Configure the Exception to be used (raised and rescued) for User Not Found.
-  ## note: change this if ActiveRecord is not being used.
+  ## Configure the exception to be used when user cannot be found.
   ##
   ## Default:
   # config.not_found_exception_class_name = 'ActiveRecord::RecordNotFound'

@@ -117,7 +117,69 @@ Note: the `authenticate_user` method uses the `current_user` method. Overwriting
 
 You can do the exact same thing for any entity. E.g. for `Admin`, use `authenticate_admin` and `current_admin` instead.
 
-### Authenticating from a web or mobile application:
+### Customization
+
+#### Via the entity model
+
+The entity model (e.g. `User`) can implement specific methods to provide
+customization over different part of the authentication process.
+
+- Find the entity when creating the token (when signing in)
+
+By default, Knock tries to find the entity by email. If you want to modify this
+behaviour, implement in your entity model a class method `find_for_token_creation`
+that takes the request in argument.
+
+E.g.
+
+```ruby
+class User < ActiveRecord::Base
+  def self.find_for_token_creation request
+    # Returns a valid user, `nil` or raise `Knock.not_found_exception_class_name`
+  end
+end
+```
+
+- Find the authenticated entity from the token payload (when authenticating a request)
+
+By default, Knock assumes the payload as a subject (`sub`) claim containing the entity's id
+and calls `find` on the model. If you want to modify this behaviour, implement in
+your entity model a class method `find_for_authentication` that takes the
+payload in argument.
+
+E.g.
+
+```ruby
+class User < ActiveRecord::Base
+  def self.find_for_authentication payload
+    # Returns a valid user, `nil` or raise
+  end
+end
+```
+
+- Modify the token payload
+
+By default the token payload contains the entity's id inside the subject (`sub`) claim.
+If you want to modify this behaviour, implement in your entity model an instance method
+`to_token_payload` that returns a hash representing the payload.
+
+E.g.
+
+```ruby
+class User < ActiveRecord::Base
+  def to_token_payload
+    # Returns the payload as a hash
+  end
+end
+```
+
+#### Via the initializer
+
+The initializer [config/initializers/knock.rb](https://github.com/nsarno/knock/blob/master/lib/generators/templates/knock.rb)
+is generated when `rails g knock:install` is executed. Each configuration variable is
+documented with comments in the initializer itself.
+
+### Authenticating from a web or mobile application
 
 Example request to get a token from your API:
 ```
