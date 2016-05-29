@@ -2,10 +2,19 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unreleased
-## Added
+## [Unreleased] - Unreleased
+### Added
+- Exception configuration option `Knock.not_found_exception_class_name`
+- Multiple entity authentication (e.g. User, Admin, etc)
 - Possibility to have permanent tokens
-- adding config options for exception class
+- Adding config options for exception class
+- Generator for token controller. E.g. `rails g knock:token_controller user`
+
+### Changed
+- Deprecated `Authenticable#authenticate` in favor of `Authenticable#authenticate_user`
+- Deprecated use of `Knock.current_user_from_token` in favor of `User.from_token_payload`
+- Deprecated use of direct route to `AuthTokenController` in favor of generating  a token controller
+- No need to mount the engine in `config/routes.rb` anymore
 
 ## [1.4.2] - 2016-01-29
 ### Fixed

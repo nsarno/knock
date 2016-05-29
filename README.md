@@ -26,13 +26,6 @@ Knock is an authentication solution for Rails API-only application based on JSON
 
 Yes.
 
-### Upcoming features & improvements
-
-- Easy way to authenticate multiple user types (User, Admin, ...)
-- Remove ActiveRecord dependency
-
-Really want some feature? Don't hesitate to open an issue :)
-
 ## Getting Started
 
 ### Installation
@@ -43,7 +36,7 @@ Add this line to your application's Gemfile:
 gem 'knock'
 ```
 
-And then execute:
+Then execute:
 
     $ bundle install
 
@@ -53,6 +46,13 @@ Finally, run the install generator:
 
 It will create the following initializer `config/initializers/knock.rb`.
 This file contains all the informations about the existing configuration options.
+
+If you don't use an external authentication solution like Auth0, you also need to provide a way for users to sign in:
+
+    $ rails generate knock:token_controller user
+
+This will generate the controller `user_token_controller.rb` and add the required route to your `config/routes.rb` file.
+You can also provide another entity instead of `user`. E.g. `admin`
 
 ### Requirements
 
@@ -70,17 +70,7 @@ Using `has_secure_password` is recommended, but you don't have to as long as you
 
 ### Usage
 
-Mount the `Knock::Engine` in your `config/routes.rb`
-
-```ruby
-Rails.application.routes.draw do
-  mount Knock::Engine => "/knock"
-
-  # your routes ...
-end
-```
-
-Then include the `Knock::Authenticable` module in your `ApplicationController`
+Include the `Knock::Authenticable` module in your `ApplicationController`
 
 ```ruby
 class ApplicationController < ActionController::API
@@ -88,12 +78,12 @@ class ApplicationController < ActionController::API
 end
 ```
 
-You can now protect your resources by adding the `authenticate` before_action
-to your controllers like this:
+You can now protect your resources by calling `authenticate_user` as a before_action
+inside your controllers:
 
 ```ruby
-class MyResourcesController < ApplicationController
-  before_action :authenticate
+class SecuredController < ApplicationController
+  before_action :authenticate_user
 
   def index
     # etc...
@@ -103,33 +93,102 @@ class MyResourcesController < ApplicationController
 end
 ```
 
+You can access the current user in your controller with `current_user`.
+
 If no valid token is passed with the request, Knock will respond with:
 
 ```
 head :unauthorized
 ```
 
-If you just want to read the `current_user`, without actually authenticating, you can also do that:
+You also have access directly to `current_user` which will try to authenticate or return `nil`:
 
 ```ruby
-class CurrentUsersController < ApplicationController
-  def show
-    if current_user
-      head :ok
-    else
-      head :not_found
-    end
+def index
+  if current_user
+    # do something
+  else
+    # do something else
   end
 end
 ```
 
-Note that the `authenticate` method depends upon the `current_user` method. Overwriting `current_user` in the controller may break the `authenticate` method.
+Note: the `authenticate_user` method uses the `current_user` method. Overwriting `current_user` may cause unexpected behaviour.
 
-### Authenticating from a web or mobile application:
+You can do the exact same thing for any entity. E.g. for `Admin`, use `authenticate_admin` and `current_admin` instead.
+
+### Customization
+
+#### Via the entity model
+
+The entity model (e.g. `User`) can implement specific methods to provide
+customization over different parts of the authentication process.
+
+- **Find the entity when creating the token (when signing in)**
+
+By default, Knock tries to find the entity by email. If you want to modify this
+behaviour, implement within your entity model a class method `from_token_request`
+that takes the request in argument.
+
+E.g.
+
+```ruby
+class User < ActiveRecord::Base
+  def self.from_token_request request
+    # Returns a valid user, `nil` or raise `Knock.not_found_exception_class_name`
+    # e.g.
+    #   email = request.params["auth"] && request.params["auth"]["email"]
+    #   self.find_by email: email
+  end
+end
+```
+
+- **Find the authenticated entity from the token payload (when authenticating a request)**
+
+By default, Knock assumes the payload as a subject (`sub`) claim containing the entity's id
+and calls `find` on the model. If you want to modify this behaviour, implement within
+your entity model a class method `from_token_payload` that takes the
+payload in argument.
+
+E.g.
+
+```ruby
+class User < ActiveRecord::Base
+  def self.from_token_payload payload
+    # Returns a valid user, `nil` or raise
+    # e.g.
+    #   self.find payload["sub"]
+  end
+end
+```
+
+- **Modify the token payload**
+
+By default the token payload contains the entity's id inside the subject (`sub`) claim.
+If you want to modify this behaviour, implement within your entity model an instance method
+`to_token_payload` that returns a hash representing the payload.
+
+E.g.
+
+```ruby
+class User < ActiveRecord::Base
+  def to_token_payload
+    # Returns the payload as a hash
+  end
+end
+```
+
+#### Via the initializer
+
+The initializer [config/initializers/knock.rb](https://github.com/nsarno/knock/blob/master/lib/generators/templates/knock.rb)
+is generated when `rails g knock:install` is executed. Each configuration variable is
+documented with comments in the initializer itself.
+
+### Authenticating from a web or mobile application
 
 Example request to get a token from your API:
 ```
-POST /knock/auth_token
+POST /user_auth_token
 {"auth": {"email": "foo@bar.com", "password": "secret"}}
 ```
 
@@ -139,7 +198,7 @@ Example response from the API:
 {"jwt": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9"}
 ```
 
-To make an authenticated request to your API, you need to pass the token in the request header:
+To make an authenticated request to your API, you need to pass the token via the request header:
 ```
 Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9
 GET /my_resources
@@ -157,7 +216,7 @@ To authenticate within your tests:
 e.g.
 
 ```ruby
-class MyResourcesControllerTest < ActionController::TestCase
+class SecuredControllerTest < ActionController::TestCase
   def authenticate
     token = Knock::AuthToken.new(payload: { sub: users(:one).id }).token
     request.env['HTTP_AUTHORIZATION'] = "Bearer #{token}"

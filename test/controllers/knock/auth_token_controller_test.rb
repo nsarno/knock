@@ -28,5 +28,12 @@ module Knock
       post :create, auth: { email: user.email, password: 'secret' }
       assert_response :created
     end
+
+    test "response contains token" do
+      post :create, auth: { email: user.email, password: 'secret' }
+
+      content = JSON.parse(response.body)
+      assert_equal true, content.has_key?("jwt")
+    end
   end
 end
