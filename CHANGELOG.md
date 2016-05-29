@@ -2,7 +2,7 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased] - Unreleased
+## [1.5] - 2016-05-29
 ### Added
 - Exception configuration option `Knock.not_found_exception_class_name`
 - Multiple entity authentication (e.g. User, Admin, etc)
