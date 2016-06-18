@@ -20,4 +20,10 @@ class CurrentUsersControllerTest < ActionController::TestCase
     get :show
     assert_response :success
   end
+
+  test "responds with 200 for the second time" do
+    authenticate
+    get :show
+    assert_response :success
+  end
 end
