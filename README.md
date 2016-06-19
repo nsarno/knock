@@ -188,7 +188,7 @@ documented with comments in the initializer itself.
 
 Example request to get a token from your API:
 ```
-POST /user_auth_token
+POST /user_token
 {"auth": {"email": "foo@bar.com", "password": "secret"}}
 ```
 
