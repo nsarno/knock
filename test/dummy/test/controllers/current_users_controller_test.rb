@@ -20,4 +20,12 @@ class CurrentUsersControllerTest < ActionController::TestCase
     get :show
     assert_response :success
   end
+
+  # Run this test twice to validate that it still works
+  # when the getter method has already been defined.
+  test "responds with 200 #2" do
+    authenticate
+    get :show
+    assert_response :success
+  end
 end
