@@ -5,19 +5,16 @@ module Knock::Authenticable
   end
 
   def authenticate_for entity_class
-    token = params[:token] || token_from_request_headers
-    return nil if token.nil?
-
-    begin
-      @entity = Knock::AuthToken.new(token: token).entity_for(entity_class)
-      define_current_entity_getter(entity_class)
-      @entity
-    rescue
-      nil
-    end
+    getter_name = "current_#{entity_class.to_s.underscore}"
+    define_current_entity_getter(entity_class, getter_name)
+    public_send(getter_name)
   end
 
   private
+
+  def token
+    params[:token] || token_from_request_headers
+  end
 
   def method_missing(method, *args)
     prefix, entity_name = method.to_s.split('_', 2)
@@ -42,11 +39,20 @@ module Knock::Authenticable
     end
   end
 
-  def define_current_entity_getter entity_class
-    getter_name = "current_#{entity_class.to_s.underscore}"
+  def define_current_entity_getter entity_class, getter_name
     unless self.respond_to?(getter_name)
+      memoization_var_name = "@_#{getter_name}"
       self.class.send(:define_method, getter_name) do
-        @entity ||= nil
+        unless instance_variable_defined?(memoization_var_name)
+          current =
+            begin
+              Knock::AuthToken.new(token: token).entity_for(entity_class)
+            rescue
+              nil
+            end
+          instance_variable_set(memoization_var_name, current)
+        end
+        instance_variable_get(memoization_var_name)
       end
     end
   end
