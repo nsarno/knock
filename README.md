@@ -101,6 +101,8 @@ If no valid token is passed with the request, Knock will respond with:
 head :unauthorized
 ```
 
+You can modify this behaviour by overriding `unauthorized_entity` in your controller.
+
 You also have access directly to `current_user` which will try to authenticate or return `nil`:
 
 ```ruby
@@ -113,7 +115,7 @@ def index
 end
 ```
 
-Note: the `authenticate_user` method uses the `current_user` method. Overwriting `current_user` may cause unexpected behaviour.
+_Note: the `authenticate_user` method uses the `current_user` method. Overwriting `current_user` may cause unexpected behaviour._
 
 You can do the exact same thing for any entity. E.g. for `Admin`, use `authenticate_admin` and `current_admin` instead.
 
