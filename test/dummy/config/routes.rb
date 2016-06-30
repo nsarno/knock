@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   resources :admin_protected
   resources :composite_name_entity_protected
   resources :vendor_protected
+  resources :custom_unauthorized_entity
 
   mount Knock::Engine => "/knock"
 end

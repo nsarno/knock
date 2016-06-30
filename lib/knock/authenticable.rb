@@ -20,7 +20,7 @@ module Knock::Authenticable
     prefix, entity_name = method.to_s.split('_', 2)
     case prefix
     when 'authenticate'
-      head(:unauthorized) unless authenticate_entity(entity_name)
+      unauthorized_entity(entity_name) unless authenticate_entity(entity_name)
     when 'current'
       authenticate_entity(entity_name)
     else
@@ -31,6 +31,10 @@ module Knock::Authenticable
   def authenticate_entity(entity_name)
     entity_class = entity_name.camelize.constantize
     send(:authenticate_for, entity_class)
+  end
+
+  def unauthorized_entity(entity_name)
+    head(:unauthorized)
   end
 
   def token_from_request_headers
