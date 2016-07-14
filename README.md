@@ -238,18 +238,18 @@ To authenticate within your tests:
 e.g.
 
 ```ruby
-class SecuredControllerTest < ActionController::TestCase
-  def authenticate
+class SecuredResourcesControllerTest < ActionDispatch::IntegrationTest
+  def authenticated_header
     token = Knock::AuthToken.new(payload: { sub: users(:one).id }).token
-    request.env['HTTP_AUTHORIZATION'] = "Bearer #{token}"
-  end
 
-  setup do
-    authenticate
+    {
+      'Authorization': "Bearer #{token}"
+    }
   end
 
   it 'responds successfully' do
-    get :index
+    get secured_resources_url, headers: authenticated_header
+
     assert_response :success
   end
 end
