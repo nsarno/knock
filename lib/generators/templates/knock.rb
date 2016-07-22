@@ -105,4 +105,12 @@ Knock.setup do |config|
   ##
   ## Default:
   # config.not_found_exception_class_name = 'ActiveRecord::RecordNotFound'
+
+  ## Current User prefix
+  ## -------------------
+  ##
+  ## Configure the prefix of the current user helper method.
+  ##
+  ## Default:
+  ## config.current_user_prefix = 'current'
 end

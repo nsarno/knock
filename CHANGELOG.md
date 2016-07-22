@@ -5,6 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased] - unreleased
 ### Added
 - Configurable unauthorized response by overriding `Authenticable#unauthorized_entity`
+- Configurable current user prefix
 
 ## [1.5] - 2016-05-29
 ### Added
