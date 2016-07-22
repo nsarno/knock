@@ -5,6 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [2.0] - unreleased
 ### Added
 - Configurable unauthorized response by overriding `Authenticable#unauthorized_entity`
+- Configurable default validations by adding verify_options to AuthToken initializer
 
 ### Removed
 - Deprecated features (see deprecated features in version 1.5)
