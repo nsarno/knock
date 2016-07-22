@@ -49,10 +49,10 @@ module Knock
     end
 
     test "validate expiration claim by default" do
-      token = Knock::AuthToken.new(payload: { sub: 'foo' }).token
+      token = AuthToken.new(payload: {sub: 'foo'}).token
       Timecop.travel(25.hours.from_now) do
         assert_raises(JWT::ExpiredSignature) {
-          Knock::AuthToken.new(token: token)
+          AuthToken.new(token: token)
         }
       end
     end
@@ -60,9 +60,51 @@ module Knock
     test "does not validate expiration claim with a nil token_lifetime" do
       Knock.token_lifetime = nil
 
-      token = Knock::AuthToken.new(payload: { sub: 'foo' }).token
+      token = AuthToken.new(payload: {sub: 'foo'}).token
       Timecop.travel(10.years.from_now) do
-        assert_not Knock::AuthToken.new(token: token).payload.has_key?('exp')
+        assert_not AuthToken.new(token: token).payload.has_key?('exp')
+      end
+    end
+
+    test "validate aud when verify_options[:verify_aud] is true" do
+      verify_options = {
+          verify_aud: true
+      }
+      Knock.token_audience = -> { 'bar' }
+      key = Knock.token_secret_signature_key.call
+      assert_raises(JWT::InvalidAudError) {
+        AuthToken.new token: @token, verify_options: verify_options
+      }
+    end
+
+    test "does not validate aud when verify_options[:verify_aud] is false" do
+      verify_options = {
+          verify_aud: false
+      }
+      Knock.token_audience = -> { 'bar' }
+      key = Knock.token_secret_signature_key.call
+      assert_not AuthToken.new(token: @token, verify_options: verify_options).payload.has_key?('aud')
+    end
+
+    test "validate expiration when verify_options[:verify_expiration] is true" do
+      verify_options = {
+          verify_expiration: true
+      }
+      token = AuthToken.new(payload: {sub: 'foo'}).token
+      Timecop.travel(25.hours.from_now) do
+        assert_raises(JWT::ExpiredSignature) {
+          AuthToken.new(token: token, verify_options: verify_options)
+        }
+      end
+    end
+
+    test "does not validate expiration when verify_options[:verify_expiration] is false" do
+      verify_options = {
+          verify_expiration: false
+      }
+      token = AuthToken.new(payload: {sub: 'foo'}).token
+      Timecop.travel(25.hours.from_now) do
+        assert AuthToken.new(token: token, verify_options: verify_options).payload.has_key?('exp')
       end
     end
 
