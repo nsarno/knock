@@ -5,9 +5,9 @@ module Knock
     attr_reader :token
     attr_reader :payload
 
-    def initialize payload: {}, token: nil
+    def initialize payload: {}, token: nil, verify_options: {}
       if token.present?
-        @payload, _ = JWT.decode token, decode_key, true, options
+        @payload, _ = JWT.decode token, decode_key, true, options.merge(verify_options)
         @token = token
       else
         @payload = claims.merge(payload)
