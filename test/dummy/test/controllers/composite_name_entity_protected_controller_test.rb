@@ -31,7 +31,7 @@ class CompositeNameEntityProtectedControllerTest < ActionController::TestCase
   test "responds with unauthorized to invalid entity" do
     invalid_entity_auth
     get :index
-    assert_response :unauthorized
+    assert_response :not_found
   end
 
   test "responds with success if authenticated" do

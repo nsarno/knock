@@ -1,7 +1,6 @@
 require "knock/engine"
 
 module Knock
-
   mattr_accessor :handle_attr
   self.handle_attr = :email
 
@@ -26,11 +25,21 @@ module Knock
   mattr_accessor :token_public_key
   self.token_public_key = nil
 
+  mattr_accessor :unauthorized_exception_code
+  self.unauthorized_exception_code = 401
+
+  mattr_accessor :record_not_found_exception_code
+  self.record_not_found_exception_code = 404
+
   mattr_accessor :not_found_exception_class_name
   self.not_found_exception_class_name = 'ActiveRecord::RecordNotFound'
 
   def self.not_found_exception_class
     not_found_exception_class_name.to_s.constantize
+  end
+
+  def self.success_code
+    200
   end
 
   # Default way to setup Knock. Run `rails generate knock:install` to create

@@ -28,12 +28,12 @@ class ProtectedResourcesControllerTest < ActionController::TestCase
   end
 
   test "responds with success with token in url" do
-    get :index, token: @token
+    get :index, params: { token: @token }
     assert_response :success
   end
 
   test "responds with unauthorized with invalid token in url" do
-    get :index, token: "invalid"
+    get :index, params: { token: "invalid" }
     assert_response :unauthorized
   end
 
