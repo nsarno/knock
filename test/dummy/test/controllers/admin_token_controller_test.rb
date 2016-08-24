@@ -6,17 +6,17 @@ class AdminTokenControllerTest < ActionController::TestCase
   end
 
   test "responds with 404 if user does not exist" do
-    post :create, auth: { email: 'wrong@example.net', password: '' }
+    post :create, params: { auth: { email: 'wrong@example.net', password: '' } }
     assert_response :not_found
   end
 
   test "responds with 404 if password is invalid" do
-    post :create, auth: { email: @admin.email, password: 'wrong' }
+    post :create, params: { auth: { email: @admin.email, password: 'wrong' } }
     assert_response :not_found
   end
 
   test "responds with 201" do
-    post :create, auth: { email: @admin.email, password: 'secret' }
+    post :create, params: { auth: { email: @admin.email, password: 'secret' } }
     assert_response :created
   end
 end

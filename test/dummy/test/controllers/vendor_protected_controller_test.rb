@@ -31,7 +31,7 @@ class VendorProtectedControllerTest < ActionController::TestCase
   test "responds with unauthorized to invalid entity" do
     invalid_entity_auth
     get :index
-    assert_response :unauthorized
+    assert_response :not_found
   end
 
   test "responds with success if authenticated" do
@@ -48,8 +48,8 @@ class VendorProtectedControllerTest < ActionController::TestCase
   end
 
   test "raises method missing error appropriately" do
-    assert_raises(NoMethodError) do
-      get :show, id: 1
+    assert_raises(NameError) do
+      get :show, params: { id: 1 }
     end
   end
 end

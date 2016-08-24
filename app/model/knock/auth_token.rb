@@ -6,14 +6,14 @@ module Knock
     attr_reader :payload
 
     def initialize payload: {}, token: nil
-      if token.present?
-        @payload, _ = JWT.decode token, decode_key, true, options
-        @token = token
-      else
+      if token.nil?
         @payload = payload
         @token = JWT.encode claims.merge(payload),
           secret_key,
           Knock.token_signature_algorithm
+      else
+        @payload, _ = JWT.decode token, decode_key, true, options
+        @token = token
       end
     end
 
