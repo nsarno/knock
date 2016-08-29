@@ -226,6 +226,8 @@ Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9
 GET /my_resources
 ```
 
+Knock responds with a `404 Not Found` when the user cannot be found or the password is invalid. This is a security best practice to avoid giving away information about the existence or not of a particular user.
+
 **NB:** HTTPS should always be enabled when sending a password or token in your request.
 
 ### Authenticated tests
