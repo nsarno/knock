@@ -5,6 +5,9 @@ module Knock
   mattr_accessor :handle_attr
   self.handle_attr = :email
 
+  mattr_accessor :current_user_prefix
+  self.current_user_prefix = 'current'
+
   mattr_accessor :current_user_from_handle
   self.current_user_from_handle = -> handle { User.find_by! Knock.handle_attr => handle }
 

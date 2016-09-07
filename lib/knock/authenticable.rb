@@ -5,7 +5,7 @@ module Knock::Authenticable
   end
 
   def authenticate_for entity_class
-    getter_name = "current_#{entity_class.to_s.underscore}"
+    getter_name = "#{Knock.current_user_prefix}_#{entity_class.to_s.underscore}"
     define_current_entity_getter(entity_class, getter_name)
     public_send(getter_name)
   end

@@ -44,6 +44,13 @@ class ProtectedResourcesControllerTest < ActionController::TestCase
     assert @controller.current_user.id == @user.id
   end
 
+  test "has a prefixed current user after authentication" do
+    authenticate
+    get :index
+    assert_response :success
+    assert @controller.current_api_user.id == @user.id
+  end
+
   test "accepts any prefix in the authorization header" do
     @request.env['HTTP_AUTHORIZATION'] = "Other #{@token}"
 
