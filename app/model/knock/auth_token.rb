@@ -10,8 +10,8 @@ module Knock
         @payload, _ = JWT.decode token, decode_key, true, options
         @token = token
       else
-        @payload = payload
-        @token = JWT.encode claims.merge(payload),
+        @payload = claims.merge(payload)
+        @token = JWT.encode @payload,
           secret_key,
           Knock.token_signature_algorithm
       end
