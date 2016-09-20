@@ -65,6 +65,13 @@ module Knock
       end
     end
 
+    test "Knock::AuthToken has all payloads" do
+      Knock.token_lifetime = 7.days
+      payload = Knock::AuthToken.new(payload: { sub: 'foo' }).payload
+      assert payload.has_key?(:sub)
+      assert payload.has_key?(:exp)
+    end
+
     test "is serializable" do
       auth_token = AuthToken.new token: @token
 
