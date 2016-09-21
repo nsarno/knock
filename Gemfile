@@ -15,3 +15,9 @@ gemspec
 
 gem "codeclimate-test-reporter", group: :test, require: nil
 gem "simplecov", require: false, group: :test
+
+group :development do
+  gem "bundler"
+  gem "rake"
+  gem "appraisal"
+end
