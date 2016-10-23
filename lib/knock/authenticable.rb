@@ -1,9 +1,4 @@
 module Knock::Authenticable
-  def authenticate
-    warn "[DEPRECATION]: `authenticate` is deprecated. Please use `authenticate_user` instead."
-    head(:unauthorized) unless authenticate_for(User)
-  end
-
   def authenticate_for entity_class
     getter_name = "current_#{entity_class.to_s.underscore}"
     define_current_entity_getter(entity_class, getter_name)

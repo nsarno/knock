@@ -41,7 +41,6 @@ module Knock
 
     test "verify audience when token_audience is present" do
       Knock.token_audience = -> { 'bar' }
-      key = Knock.token_secret_signature_key.call
 
       assert_raises(JWT::InvalidAudError) {
         AuthToken.new token: @token
