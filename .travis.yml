@@ -5,8 +5,8 @@ rvm:
 gemfile:
   - gemfiles/rails_4.gemfile
   - gemfiles/rails_5.gemfile
-after_install:
-  - bundle exec rake db:test:prepare
+before_script:
+  - bundle exec rake db:migrate RAILS_ENV=test
 addons:
   code_climate:
     repo_token: 61c3ea804322306871a6b7e06a0a6435672cd29aea0c2b286e6b837234ba9d90
