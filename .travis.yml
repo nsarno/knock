@@ -2,9 +2,6 @@ language: ruby
 rvm:
   - 2.3.1
   - 2.2.5
-gemfile:
-  - gemfiles/rails_4.gemfile
-  - gemfiles/rails_5.gemfile
 before_script:
   - bundle exec rake db:migrate RAILS_ENV=test
 addons:

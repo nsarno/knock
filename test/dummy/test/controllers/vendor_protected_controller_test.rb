@@ -49,7 +49,7 @@ class VendorProtectedControllerTest < ActionController::TestCase
 
   test "raises method missing error appropriately" do
     assert_raises(NoMethodError) do
-      get :show, id: 1
+      get :show, params: {id: 1}
     end
   end
 end

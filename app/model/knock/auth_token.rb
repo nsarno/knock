@@ -21,12 +21,7 @@ module Knock
       if entity_class.respond_to? :from_token_payload
         entity_class.from_token_payload @payload
       else
-        if entity_class.to_s == "User" && Knock.respond_to?(:current_user_from_token)
-          warn "[DEPRECATION]: `Knock.current_user_from_token` is deprecated. Please implement `User.from_token_payload` instead."
-          Knock.current_user_from_token.call @payload
-        else
-          entity_class.find @payload['sub']
-        end
+        entity_class.find @payload['sub']
       end
     end
 
