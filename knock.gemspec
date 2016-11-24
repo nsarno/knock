@@ -19,6 +19,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency "rails", ">= 4.2"
   s.add_dependency "jwt", "~> 1.5"
+  s.add_dependency "json-jwt", "~> 1.6"
   s.add_dependency "bcrypt", "~> 3.1"
 
   s.add_development_dependency "sqlite3", "~> 1.3"
