@@ -1,6 +1,10 @@
 require 'test_helper'
 require 'jwt'
 require 'timecop'
+require 'webmock/minitest'
+
+# Disable all remote connections
+WebMock.disable_net_connect!
 
 module Knock
   class AuthTokenTest < ActiveSupport::TestCase
@@ -23,6 +27,21 @@ module Knock
       Knock.token_signature_algorithm = 'RS256'
 
       token = JWT.encode({sub: "1"}, rsa_private, 'RS256')
+
+      assert_nothing_raised { AuthToken.new(token: token) }
+    end
+
+    test "decode RSA encoded tokens with JWKs from URL" do
+      rsa_private = OpenSSL::PKey::RSA.generate 2048
+      rsa_public = rsa_private.public_key
+
+      Knock.token_public_key = 'https://example.com/.well-known/jwks.json'
+      Knock.token_signature_algorithm = 'RS256'
+
+      stub_request(:get, Knock.token_public_key)
+        .to_return(body: JSON::JWK::Set.new(JSON::JWK.new(rsa_public)).to_json)
+
+      token = JSON::JWT.new({sub: "1"}).sign(JSON::JWK.new(rsa_private)).to_s
 
       assert_nothing_raised { AuthToken.new(token: token) }
     end

@@ -1,4 +1,7 @@
+require 'uri'
 require 'jwt'
+require 'json/jwt'
+require 'net/http'
 
 module Knock
   class AuthToken
@@ -7,7 +10,20 @@ module Knock
 
     def initialize payload: {}, token: nil, verify_options: {}
       if token.present?
-        @payload, _ = JWT.decode token.to_s, decode_key, true, options.merge(verify_options)
+        token_decode_key = decode_key
+
+        if token_decode_key.is_a?(JSON::JWK::Set)
+          @payload = JSON::JWT.decode(token.to_s, token_decode_key)
+
+          options.merge(verify_options).each do |key, val|
+            next unless key.to_s =~ /verify/
+
+            JWT::Verify.send(key, payload, @options) if val
+          end
+        else
+          @payload, _ = JWT.decode token.to_s, token_decode_key, true, options.merge(verify_options)
+        end
+
         @token = token
       else
         @payload = claims.merge(payload)
@@ -35,7 +51,18 @@ module Knock
     end
 
     def decode_key
-      Knock.token_public_key || secret_key
+      if Knock.token_public_key
+        if Knock.token_public_key =~ /^#{URI::Parser.new.make_regexp(['http', 'https'])}$/
+          # This means there's a JWK or JWKs public key that we need to fetch
+          JSON::JWK::Set.new(
+            JSON.parse( Net::HTTP.get( URI(Knock.token_public_key) ) )
+          )
+        else
+          Knock.token_public_key
+        end
+      else
+        secret_key
+      end
     end
 
     def options
