@@ -10,5 +10,9 @@ Rails.application.routes.draw do
   resources :vendor_protected
   resources :custom_unauthorized_entity
 
+  namespace :v1 do
+    resources :test_namespaced
+  end
+
   mount Knock::Engine => "/knock"
 end
