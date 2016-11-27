@@ -139,6 +139,8 @@ class SecuredController < ApplicationController
 end
 ```
 
+Then you get the current user by calling `current_v1_user` instead of `current_user`.
+
 ### Customization
 
 #### Via the entity model
