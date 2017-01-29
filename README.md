@@ -230,6 +230,44 @@ Knock responds with a `404 Not Found` when the user cannot be found or the passw
 
 **NB:** HTTPS should always be enabled when sending a password or token in your request.
 
+### Registering new users
+
+If you want to allow users to register/signup and immediately receive a JWT token in the response, you can customize the behavior of UserTokenController (created with `rails generate knock:token_controller user`) or the equivalent controller you may have created.
+
+```
+# Add to config/routes.rb
+post 'register' => 'user_token#register'
+```
+
+```
+class UserTokenController < Knock::AuthTokenController
+
+  # Skip authenticating for the register action 
+  # because the user doesn't exist yet.
+  skip_before_action :authenticate, only: :register
+
+  def register
+    user = User.new(user_params)
+    if user.save
+      # Now you can authenticate the user.
+      # The following methods belong to Knock::AuthTokenController.
+      # See https://github.com/nsarno/knock/blob/master/app/controllers/knock/auth_token_controller.rb
+      authenticate
+      create
+    else
+      render json: user.errors, status: :unprocessable_entity
+    end
+  end
+
+  private
+
+  def user_params
+    params.require(:auth).permit(:username, :password)
+  end
+
+end
+```
+
 ### Authenticated tests
 
 To authenticate within your tests:
