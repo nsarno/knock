@@ -2,10 +2,17 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [2.0] - unreleased
+## [2.1]
+### Fixed
+- Parsing of token controller to handle namespaces correctly
+
+### Added
+- Configurable default validations by adding `verify_options` parameter to AuthToken initializer
+
+
+## [2.0] - 2016-10-23
 ### Added
 - Configurable unauthorized response by overriding `Authenticable#unauthorized_entity`
-- Configurable default validations by adding verify_options to AuthToken initializer
 
 ### Removed
 - Deprecated features (see deprecated features in version 1.5)
