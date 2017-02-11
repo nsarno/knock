@@ -24,8 +24,10 @@ module Knock::Authenticable
   end
 
   def authenticate_entity(entity_name)
-    entity_class = entity_name.camelize.constantize
-    send(:authenticate_for, entity_class)
+    if token
+      entity_class = entity_name.camelize.constantize
+      send(:authenticate_for, entity_class)
+    end
   end
 
   def unauthorized_entity(entity_name)
