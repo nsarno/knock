@@ -4,5 +4,5 @@ Knock.setup do |config|
   config.token_public_key = nil
   config.token_audience = nil
 
-  config.not_found_exception_class_name = 'Knock::MyCustomException'
+  config.not_found_exception_class_name = 'ActiveRecord::RecordNotFound'
 end

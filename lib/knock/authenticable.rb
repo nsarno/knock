@@ -46,7 +46,7 @@ module Knock::Authenticable
           current =
             begin
               Knock::AuthToken.new(token: token).entity_for(entity_class)
-            rescue ActiveRecord::RecordNotFound, JWT::DecodeError
+            rescue Knock.not_found_exception_class, JWT::DecodeError
               nil
             end
           instance_variable_set(memoization_var_name, current)
