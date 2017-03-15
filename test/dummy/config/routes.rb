@@ -10,4 +10,8 @@ Rails.application.routes.draw do
   resources :guest_protected
   resources :protected_resources
   resources :vendor_protected
+  
+  namespace :v1 do
+    resources :test_namespaced
+  end
 end
