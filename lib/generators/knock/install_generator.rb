@@ -1,3 +1,5 @@
+require 'rails/generators'
+
 module Knock
   class InstallGenerator < Rails::Generators::Base
     source_root File.expand_path("../../templates", __FILE__)
