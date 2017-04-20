@@ -1,4 +1,4 @@
-require 'rails/generators/named_base'
+require 'rails/generators'
 
 module Knock
   class InstallGenerator < Rails::Generators::Base
