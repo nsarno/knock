@@ -10,9 +10,16 @@ module Knock
 
   private
     def authenticate
+      return if auth_params[:strategy].present? && authorized auth_params[:strategy]
+
       unless entity.present? && entity.authenticate(auth_params[:password])
         raise Knock.not_found_exception_class
       end
+    end
+
+    def authorized(strategy)
+      strategy_klass = "#{strategy[:type]}_strategy".classify.constantize
+      strategy_klass.authorized? strategy['token']
     end
 
     def auth_token
@@ -41,7 +48,11 @@ module Knock
     end
 
     def auth_params
-      params.require(:auth).permit :email, :password
+      params.require(:auth).permit(
+        :email,
+        :password,
+        strategy: [:type, :token, :uuid]
+      )
     end
   end
 end
