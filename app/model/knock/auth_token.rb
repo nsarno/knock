@@ -14,8 +14,9 @@ module Knock
 
         if token_decode_key.is_a?(JSON::JWK::Set)
           @payload = JSON::JWT.decode(token.to_s, token_decode_key)
+          @options = options.merge(verify_options)
 
-          options.merge(verify_options).each do |key, val|
+          @options.each do |key, val|
             next unless key.to_s =~ /verify/
 
             JWT::Verify.send(key, payload, @options) if val

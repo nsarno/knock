@@ -46,6 +46,24 @@ module Knock
       assert_nothing_raised { AuthToken.new(token: token) }
     end
 
+    test "verify audience when token_audience is present with JWKs from URL" do
+      rsa_private = OpenSSL::PKey::RSA.generate 2048
+      rsa_public = rsa_private.public_key
+
+      Knock.token_audience = -> { 'bar' }
+      Knock.token_public_key = 'https://example.com/.well-known/jwks.json'
+      Knock.token_signature_algorithm = 'RS256'
+
+      stub_request(:get, Knock.token_public_key)
+        .to_return(body: JSON::JWK::Set.new(JSON::JWK.new(rsa_public)).to_json)
+
+      token = JSON::JWT.new({sub: "1"}).sign(JSON::JWK.new(rsa_private)).to_s
+
+      assert_raises(JWT::InvalidAudError) {
+        AuthToken.new token: token
+      }
+    end
+
     test "encode tokens with RSA" do
       rsa_private = OpenSSL::PKey::RSA.generate 2048
       Knock.token_secret_signature_key = -> { rsa_private }
