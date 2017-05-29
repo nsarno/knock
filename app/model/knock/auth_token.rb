@@ -19,7 +19,7 @@ module Knock
           @options.each do |key, val|
             next unless key.to_s =~ /verify/
 
-            JWT::Verify.send(key, payload, @options) if val
+            JWT::Verify.send(key, @payload, @options) if val
           end
         else
           @payload, _ = JWT.decode token.to_s, token_decode_key, true, options.merge(verify_options)
