@@ -68,7 +68,8 @@ module Knock
 
     def options
       verify_claims.merge({
-        algorithm: Knock.token_signature_algorithm
+        algorithm: Knock.token_signature_algorithm,
+        leeway: 0
       })
     end
 
