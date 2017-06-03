@@ -4,4 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :null_session
 
   include Knock::Authenticable
+  def authenticate_trump
+    set_authenticate_for Admin
+  end
 end

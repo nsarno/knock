@@ -1,5 +1,5 @@
 class AdminProtectedController < ApplicationController
-  before_action :authenticate_admin
+  before_action :authenticate_trump
 
   def index
     head :ok

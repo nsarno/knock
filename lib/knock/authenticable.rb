@@ -5,6 +5,14 @@ module Knock::Authenticable
     public_send(getter_name)
   end
 
+  def set_authenticate_for entity_class
+    unauthorized_entity(entity_class.to_s) unless authenticate_for entity_class
+  end
+
+  def set_soft_authenticate_for entity_class
+    authenticate_for entity_class
+  end
+
   private
 
   def token
