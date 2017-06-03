@@ -13,10 +13,11 @@ module Knock::Authenticable
 
   def method_missing(method, *args)
     prefix, entity_name = method.to_s.split('_', 2)
+    prefix = 'soft_authenticate' if (!args.empty? && args.first == 'soft')
     case prefix
     when 'authenticate'
       unauthorized_entity(entity_name) unless authenticate_entity(entity_name)
-    when 'current'
+    when 'current' || 'soft_authenticate'
       authenticate_entity(entity_name)
     else
       super
