@@ -18,9 +18,6 @@ module Knock::Authenticable
     else
       prefix, entity_name = method.to_s.split('_', 2)
     end
-
-    #prefix = 'soft_authenticate' if (!args.empty? && args.first.to_s == 'soft')
-    #print prefix + ' ' + entity_name
     case prefix
     when 'authenticate'
       unauthorized_entity(entity_name) unless authenticate_entity(entity_name)
