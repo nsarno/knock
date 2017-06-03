@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resource :current_user
 
   resources :admin_protected
+  resources :soft_admin
   resources :composite_name_entity_protected
   resources :custom_unauthorized_entity
   resources :guest_protected
