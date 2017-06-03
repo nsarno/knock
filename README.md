@@ -145,8 +145,10 @@ Then you get the current user by calling `current_v1_user` instead of `current_u
 
 #### Soft (Optional) Authentication
 
-For use in controllers where authentication is optional, Use `soft_authenticate_user` instead of `authenticate_user` and use `set_soft_authenticate_for V1::User` instead of `set_authenticate_for V1::User` as in the examples in the [Usage section](#Usage) above.
+For use in controllers where authentication is optional, use `soft_authenticate_user` instead of `authenticate_user` and use `set_soft_authenticate_for V1::User` instead of `set_authenticate_for V1::User` as in the examples in the [Usage section](#Usage) above.
+
 Users will have access even if no token or an invalid token is passed.
+
 NB: `current_user` will only be available if a valid token is passed and authenticated.
 
 
