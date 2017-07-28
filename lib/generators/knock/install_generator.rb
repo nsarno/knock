@@ -1,6 +1,7 @@
+require 'rails/generators'
+
 module Knock
   class InstallGenerator < Rails::Generators::Base
-    paths.add 'lib', eager_load: true
     source_root File.expand_path("../../templates", __FILE__)
 
     desc "Creates a Knock initializer."
