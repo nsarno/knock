@@ -15,5 +15,11 @@ module Knock
       assert_equal @user, @controller.current_v1_user
     end
 
+    test "disallow namespaced models with no payload" do
+      token = Knock::AuthToken.new(payload: { sub: @user.id }).token
+      get v1_test_namespaced_index_url
+      assert_response :unauthorized
+      assert_equal @user, @controller.current_v1_user
+    end
   end
 end
