@@ -19,8 +19,15 @@ module Knock
   mattr_accessor :not_found_exception_class_name
   self.not_found_exception_class_name = 'ActiveRecord::RecordNotFound'
 
+  mattr_accessor :jwt_adapter_class_name
+  self.jwt_adapter_class_name = 'Knock::JwtAdapter'
+
   def self.not_found_exception_class
     not_found_exception_class_name.to_s.constantize
+  end
+
+  def self.jwt_adapter_class
+    jwt_adapter_class_name.to_s.constantize
   end
 
   # Default way to setup Knock. Run `rails generate knock:install` to create

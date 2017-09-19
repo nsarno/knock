@@ -56,4 +56,12 @@ Knock.setup do |config|
   ##
   ## Default:
   # config.not_found_exception_class_name = 'ActiveRecord::RecordNotFound'
+
+  ## JWT Adapter Class
+  ## ---------------
+  ##
+  ## Configure a different strategy to be used when encoding and decoding JWTs.
+  ##
+  ## Default:
+  # config.jwt_adapter_class_name = 'Knock::JwtAdapter'
 end

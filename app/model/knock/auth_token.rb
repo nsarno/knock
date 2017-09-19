@@ -7,13 +7,11 @@ module Knock
 
     def initialize payload: {}, token: nil, verify_options: {}
       if token.present?
-        @payload, _ = JWT.decode token.to_s, decode_key, true, options.merge(verify_options)
+        @payload = Knock.jwt_adapter_class.new.decode(token.to_s, options.merge(verify_options))
         @token = token
       else
         @payload = claims.merge(payload)
-        @token = JWT.encode @payload,
-          secret_key,
-          Knock.token_signature_algorithm
+        @token = Knock.jwt_adapter_class.new.encode(@payload)
       end
     end
 
