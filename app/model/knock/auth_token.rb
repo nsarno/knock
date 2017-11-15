@@ -29,7 +29,7 @@ module Knock
       { jwt: @token }
     end
 
-    def to_json options={}
+    def to_json options = {}
       as_json.to_json
     end
 
