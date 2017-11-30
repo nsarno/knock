@@ -2,13 +2,17 @@ module Knock::Authenticable
   def authenticate_for entity_class
     getter_name = "current_#{entity_class.to_s.parameterize.underscore}"
     define_current_entity_getter(entity_class, getter_name)
-    public_send(getter_name)
+    service
   end
 
   private
+  
+  def service
+    Knock::AuthService.new(token: token)
+  end
 
   def token
-    params[:token] || token_from_request_headers
+    token_from_request_headers || params[:token]
   end
 
   def method_missing(method, *args)
@@ -47,7 +51,7 @@ module Knock::Authenticable
         unless instance_variable_defined?(memoization_var_name)
           current =
             begin
-              Knock::AuthToken.new(token: token).entity_for(entity_class)
+              service.entity_for(entity_class)
             rescue Knock.not_found_exception_class, JWT::DecodeError
               nil
             end

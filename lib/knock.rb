@@ -1,6 +1,10 @@
-require "knock/engine"
+require 'active_support/all'
+require 'knock/auth_service'
+require 'knock/authenticable'
 
 module Knock
+  class AuthenticationError < StandardError; end
+  
   mattr_accessor :token_lifetime
   self.token_lifetime = 1.day
 

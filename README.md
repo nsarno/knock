@@ -1,9 +1,11 @@
-# knock
+# Doorbell
 [![Gem Version](https://badge.fury.io/rb/knock.svg)](http://badge.fury.io/rb/knock)
 [![Build Status](https://travis-ci.org/nsarno/knock.svg)](https://travis-ci.org/nsarno/knock)
 [![Test Coverage](https://codeclimate.com/github/nsarno/knock/badges/coverage.svg)](https://codeclimate.com/github/nsarno/knock/coverage)
 [![Code Climate](https://codeclimate.com/github/nsarno/knock/badges/gpa.svg)](https://codeclimate.com/github/nsarno/knock)
 [![Dependency Status](https://gemnasium.com/nsarno/knock.svg)](https://gemnasium.com/nsarno/knock)
+
+This project was forked from the original project Knock
 
 Seamless JWT authentication for Rails API
 
@@ -201,36 +203,6 @@ class User < ActiveRecord::Base
   end
 end
 ```
-
-#### Via the initializer
-
-The initializer [config/initializers/knock.rb](https://github.com/nsarno/knock/blob/master/lib/generators/templates/knock.rb)
-is generated when `rails g knock:install` is executed. Each configuration variable is
-documented with comments in the initializer itself.
-
-### Authenticating from a web or mobile application
-
-Example request to get a token from your API:
-```
-POST /user_token
-{"auth": {"email": "foo@bar.com", "password": "secret"}}
-```
-
-Example response from the API:
-```
-201 Created
-{"jwt": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9"}
-```
-
-To make an authenticated request to your API, you need to pass the token via the request header:
-```
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9
-GET /my_resources
-```
-
-Knock responds with a `404 Not Found` when the user cannot be found or the password is invalid. This is a security best practice to avoid giving away information about the existence or not of a particular user.
-
-**NB:** HTTPS should always be enabled when sending a password or token in your request.
 
 ### Authenticated tests
 

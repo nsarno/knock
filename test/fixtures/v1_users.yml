@@ -1,6 +1,0 @@
-
-one:
-  email: v1user@example.net
-  password_digest: <%= BCrypt::Password.create('secret', cost: 4) %>
-  created_at: <%= Time.now.utc %>
-  updated_at: <%= Time.now.utc %>
