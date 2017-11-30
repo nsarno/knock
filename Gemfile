@@ -18,4 +18,7 @@ gem "simplecov", require: false, group: :test
 group :development do
   gem "bundler"
   gem "rake"
+  gem "activesupport"
+  gem "minitest"
+  gem 'minitest-reporters'
 end
