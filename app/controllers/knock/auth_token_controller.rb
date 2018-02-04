@@ -37,7 +37,10 @@ module Knock
     end
 
     def entity_name
-      self.class.name.scan(/\w+/).last.split('TokenController').first
+      class_name = self.class.name
+      namespace = class_name.deconstantize
+      model_name = class_name.scan(/\w+/).last.split('TokenController').first
+      "#{namespace}#{'::' if namespace.present?}#{model_name}"
     end
 
     def auth_params
