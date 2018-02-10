@@ -4,6 +4,7 @@
 [![Test Coverage](https://codeclimate.com/github/nsarno/knock/badges/coverage.svg)](https://codeclimate.com/github/nsarno/knock/coverage)
 [![Code Climate](https://codeclimate.com/github/nsarno/knock/badges/gpa.svg)](https://codeclimate.com/github/nsarno/knock)
 [![Dependency Status](https://gemnasium.com/nsarno/knock.svg)](https://gemnasium.com/nsarno/knock)
+[![Open Source Helpers](https://www.codetriage.com/nsarno/knock/badges/users.svg)](https://www.codetriage.com/nsarno/knock)
 
 Seamless JWT authentication for Rails API
 
