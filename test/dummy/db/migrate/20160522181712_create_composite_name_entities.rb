@@ -1,4 +1,4 @@
-class CreateCompositeNameEntities < ActiveRecord::Migration
+class CreateCompositeNameEntities < ActiveRecord::Migration[4.2]
   def change
     create_table :composite_name_entities do |t|
       t.string :email
