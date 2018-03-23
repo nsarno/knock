@@ -1,5 +1,4 @@
 require 'test_helper'
-# require 'timecop'
 
 module Knock
   class TestNamespacedControllerTest < ActionDispatch::IntegrationTest
@@ -13,6 +12,12 @@ module Knock
       get v1_test_namespaced_index_url, headers: {'Authorization': "Bearer #{token}"}
       assert_response :ok
       assert_equal @user, @controller.current_v1_user
+    end
+
+    test "deny namespaced models with bad token" do
+      get v1_test_namespaced_index_url, headers: {}
+      assert_response :unauthorized
+      assert_equal nil, @controller.current_v1_user
     end
 
   end

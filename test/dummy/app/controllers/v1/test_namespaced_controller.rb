@@ -1,7 +1,7 @@
 module V1
   class TestNamespacedController < ApplicationController
 
-    before_action :authenticate_v1_user
+    before_action :check_authentication!
 
     def index
       head :ok
@@ -9,8 +9,8 @@ module V1
 
     private
 
-    def authenticate_v1_user
-      authenticate_for V1::User
+    def check_authentication!
+      unauthorized_entity('v1/user') unless authenticate_entity('v1/user')
     end
 
   end
