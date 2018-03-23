@@ -119,16 +119,16 @@ _Note: the `authenticate_user` method uses the `current_user` method. Overwritin
 
 You can do the exact same thing for any entity. E.g. for `Admin`, use `authenticate_admin` and `current_admin` instead.
 
-If you're using a namespaced model, Knock won't be able to infer it automatically from the method name. Instead you can use `authenticate_for` directly like this:
+If you're using a namespaced model, Knock won't be able to infer it automatically from the method name. Instead you can use the public API directly like this:
 
 ```ruby
 class ApplicationController < ActionController::Base
   include Knock::Authenticable
-    
+
   private
-  
-  def authenticate_v1_user
-    authenticate_for V1::User
+
+  def check_authentication!
+    unauthorized_entity('v1/user') unless authenticate_entity('v1/user')
   end
 end
 ```
