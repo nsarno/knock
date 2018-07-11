@@ -65,6 +65,16 @@ module Knock
       end
     end
 
+    test "token_lifetime is overridable" do
+      Knock.token_lifetime = nil
+
+      custom_expiration = 30.minutes.from_now.to_i
+      token = AuthToken.new(payload: {sub: 'foo', exp: custom_expiration}).token
+      Timecop.travel(10.years.from_now) do
+        assert AuthToken.new(token: token).payload.has_key?('exp')
+      end
+    end
+
     test "validate aud when verify_options[:verify_aud] is true" do
       verify_options = {
           verify_aud: true
