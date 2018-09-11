@@ -11,7 +11,7 @@ module Knock
   self.token_signature_algorithm = 'HS256'
 
   mattr_accessor :token_secret_signature_key
-  self.token_secret_signature_key = -> { Rails.application.secrets.secret_key_base }
+  self.token_secret_signature_key = -> { Rails.application.credentials.read }
 
   mattr_accessor :token_public_key
   self.token_public_key = nil
