@@ -7,7 +7,7 @@ class CustomUnauthorizedEntityController < ApplicationController
 
   private
 
-  def unauthorized_entity(entity)
+  def unauthorized_entity
     head :not_found
   end
 end
