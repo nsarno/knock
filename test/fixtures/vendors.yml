@@ -2,4 +2,4 @@
 
 one:
   email: vendor.one@example.net
-  password_digest: <%= ::BCrypt::Password.create('secret', cost: 4) %>
+  password_digest: <%= BCrypt::Password.create('secret', cost: 4) %>
