@@ -34,7 +34,7 @@ module Knock
 
       token = AuthToken.new(payload: {sub: '1'}).token
 
-      payload, header = JWT.decode token, rsa_private.public_key, true
+      payload, header = JWT.decode token, rsa_private.public_key, true, { algorithm: 'RS256' }
       assert_equal payload['sub'], '1'
       assert_equal header['alg'], 'RS256'
     end
