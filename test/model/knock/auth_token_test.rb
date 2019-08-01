@@ -70,7 +70,7 @@ module Knock
           verify_aud: true
       }
       Knock.token_audience = -> { 'bar' }
-      key = Knock.token_secret_signature_key.call
+      Knock.token_secret_signature_key.call
       assert_raises(JWT::InvalidAudError) {
         AuthToken.new token: @token, verify_options: verify_options
       }
@@ -81,7 +81,7 @@ module Knock
           verify_aud: false
       }
       Knock.token_audience = -> { 'bar' }
-      key = Knock.token_secret_signature_key.call
+      Knock.token_secret_signature_key.call
       assert_not AuthToken.new(token: @token, verify_options: verify_options).payload.has_key?('aud')
     end
 
