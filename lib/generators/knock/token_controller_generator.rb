@@ -1,4 +1,4 @@
-require 'rails/generators/base'
+require 'rails/generators'
 
 module Knock
   class TokenControllerGenerator < Rails::Generators::Base
