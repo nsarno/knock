@@ -1,4 +1,5 @@
 require 'simplecov'
+require 'bcrypt'
 
 SimpleCov.start
 
