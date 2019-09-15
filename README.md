@@ -39,7 +39,7 @@ Finally, run the install generator:
     $ rails generate knock:install
 
 It will create the following initializer `config/initializers/knock.rb`.
-This file contains all the informations about the existing configuration options.
+This file contains all of the existing configuration options.
 
 If you don't use an external authentication solution like Auth0, you also need to provide a way for users to sign in:
 
