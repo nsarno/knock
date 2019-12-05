@@ -1,4 +1,5 @@
 # knock
+
 [![Gem Version](https://badge.fury.io/rb/knock.svg)](http://badge.fury.io/rb/knock)
 [![Build Status](https://travis-ci.org/nsarno/knock.svg)](https://travis-ci.org/nsarno/knock)
 [![Code Climate](https://codeclimate.com/github/nsarno/knock/badges/gpa.svg)](https://codeclimate.com/github/nsarno/knock)
@@ -18,7 +19,11 @@ Knock is an authentication solution for Rails API-only application based on JSON
 
 ### Is this being maintained?
 
-Unfortunately, not at the moment. Feel free to reach out if you want to become a maintainer.
+~~Yes~~ ~~No~~ Yes!
+
+Currently being maintained with the help of @andrerpbts ❤️
+
+Slowly moving through the backlog of issues & PRs and starting to build a roadmap for the next version.
 
 ## Getting Started
 
@@ -118,9 +123,9 @@ If you're using a namespaced model, Knock won't be able to infer it automaticall
 ```ruby
 class ApplicationController < ActionController::Base
   include Knock::Authenticable
-    
+
   private
-  
+
   def authenticate_v1_user
     authenticate_for V1::User
   end
@@ -205,18 +210,21 @@ documented with comments in the initializer itself.
 ### Authenticating from a web or mobile application
 
 Example request to get a token from your API:
+
 ```
 POST /user_token
 {"auth": {"email": "foo@bar.com", "password": "secret"}}
 ```
 
 Example response from the API:
+
 ```
 201 Created
 {"jwt": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9"}
 ```
 
 To make an authenticated request to your API, you need to pass the token via the request header:
+
 ```
 Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9
 GET /my_resources
