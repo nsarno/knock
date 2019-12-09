@@ -9,7 +9,6 @@ Knock.setup do |config|
   ## Default:
   # config.token_lifetime = 1.day
 
-
   ## Audience claim
   ## --------------
   ##
