@@ -10,6 +10,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Autoloading & Zeitwerk issues
 - Update dependency to JWT 2.2.1
 - Update dependency to Rails 5
+- Implement `#respond_to_missing?` in `Authenticable` module
 
 ### Removed
 
