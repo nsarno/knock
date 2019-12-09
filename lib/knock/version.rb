@@ -1,3 +1,7 @@
+# frozen_string_literal: true
+
 module Knock
-  VERSION = "2.2.0"
+  class Version
+    VERSION = "2.2.0"
+  end
 end
