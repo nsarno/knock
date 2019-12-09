@@ -39,20 +39,6 @@ Then execute:
 
     $ bundle install
 
-Finally, run the install generator:
-
-    $ rails generate knock:install
-
-It will create the following initializer `config/initializers/knock.rb`.
-This file contains all of the existing configuration options.
-
-If you don't use an external authentication solution like Auth0, you also need to provide a way for users to sign in:
-
-    $ rails generate knock:token_controller user
-
-This will generate the controller `user_token_controller.rb` and add the required route to your `config/routes.rb` file.
-You can also provide another entity instead of `user`. E.g. `admin`
-
 ### Requirements
 
 Knock makes one assumption about your user model:
