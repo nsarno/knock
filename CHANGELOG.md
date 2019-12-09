@@ -11,6 +11,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Update dependency to JWT 2.2.1
 - Update dependency to Rails 5
 
+### Removed
+
+- Generators
+
 ## [2.1.1] - 2017-02-11
 
 ### Fixed
