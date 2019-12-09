@@ -1,8 +1,8 @@
 module Knock
-  class ApplicationController < ActionController::Base
+  class ApplicationController < ActionController::API
     rescue_from Knock.not_found_exception_class_name, with: :not_found
 
-  private
+    private
 
     def not_found
       head :not_found

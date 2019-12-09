@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.2.0] - Unreleased
+
+### Fixed
+
+- Autoloading
+- Update dependency to JWT 2.2.1
+- Update dependency to Rails 5
+
 ## [2.1.1] - 2017-02-11
 ### Fixed
 - Stop trying to retrieve user from empty payload when no token is given
