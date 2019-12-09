@@ -7,7 +7,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
-- Autoloading
+- Autoloading & Zeitwerk issues
 - Update dependency to JWT 2.2.1
 - Update dependency to Rails 5
 
