@@ -14,7 +14,7 @@ Knock is an authentication solution for Rails API-only application based on JSON
 
 - It's lightweight.
 - It's tailored for Rails API-only application.
-- It's [stateless](https://en.wikipedia.org/wiki/Representational_state_transfer#Stateless).
+- It's [stateless](https://en.wikipedia.org/wiki/Representational_state_transfer#Statelessness).
 - It works out of the box with services like [Auth0](http://auth0.com/)
 
 ### Is this being maintained?
