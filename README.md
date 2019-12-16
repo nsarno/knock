@@ -187,20 +187,31 @@ class User < ActiveRecord::Base
 end
 ```
 
-- **Modify the token lifetime**
+- **Token Lifetime**
 
-By default the token lifetime offer 1 day to a default user.
-If you want to modify this behaviour, add more users on initialize, implement within your
-entity model a method `token_lifetime` that returns a hash or a integer representing the lifetime.
+By default the generated tokens will be valid, after generated, for 1 day.
+You can change it in the Knock configuration file (config/knock.rb),
+setting the desired lifetime:
 
 E.g.
 
 ```ruby
-class ?
-  def self.token_lifetime
-    # Returns the lifetime as a hash or integer
-  end
-end
+self.token_lifetime = 3.hours
+```
+
+If you are generating tokens for more than one entity, you can pass
+each lifetime in a hash, using the entities class names as keys, like:
+
+E.g.
+
+```ruby
+  # How long before a token is expired. If nil is provided,
+  # token will last forever.
+  mattr_accessor :token_lifetime
+  self.token_lifetime = {}
+    user: 1.day
+    admin: 30.minutes
+  }
 ```
 
 #### In the initializer
