@@ -53,7 +53,10 @@ module Knock
     end
 
     def token_lifetime
-      Knock.token_lifetime.from_now.to_i if verify_lifetime?
+      return unless verify_lifetime?
+
+      key = entity_class.to_s.parameterize.underscore.to_sym || :default
+      Knock.token_lifetime[key].from_now.to_i
     end
 
     def verify_lifetime?
