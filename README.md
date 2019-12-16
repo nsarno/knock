@@ -196,6 +196,7 @@ setting the desired lifetime:
 E.g.
 
 ```ruby
+mattr_accessor :token_lifetime
 self.token_lifetime = 3.hours
 ```
 
@@ -208,7 +209,7 @@ E.g.
   # How long before a token is expired. If nil is provided,
   # token will last forever.
   mattr_accessor :token_lifetime
-  self.token_lifetime = {}
+  self.token_lifetime = {
     user: 1.day
     admin: 30.minutes
   }
