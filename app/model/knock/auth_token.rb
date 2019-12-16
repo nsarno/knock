@@ -58,7 +58,6 @@ module Knock
       if Knock.token_lifetime.is_a?(Hash)
         Knock.token_lifetime[entity_class.to_s.parameterize.underscore.to_sym].from_now.to_i
       else
-        puts "# WARNING: type deprecated. Use hash instead"
         Knock.token_lifetime.from_now.to_i
       end
     end

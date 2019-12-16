@@ -187,6 +187,22 @@ class User < ActiveRecord::Base
 end
 ```
 
+- **Modify the token lifetime**
+
+By default the token lifetime offer 1 day to a default user.
+If you want to modify this behaviour, add more users on initialize, implement within your
+entity model a method `token_lifetime` that returns a hash or a integer representing the lifetime.
+
+E.g.
+
+```ruby
+class ?
+  def self.token_lifetime
+    # Returns the lifetime as a hash or integer
+  end
+end
+```
+
 #### In the initializer
 
 Read [lib/knock.rb](https://github.com/nsarno/knock/blob/master/lib/knock.rb) to learn about all the possible configuration options and their default values.
