@@ -1,8 +1,12 @@
 module Knock::Authenticable
-  def authenticate_for entity_class
+  def authenticate_for entity_class, by_callback: true
     getter_name = "current_#{entity_class.to_s.parameterize.underscore}"
     define_current_entity_getter(entity_class, getter_name)
-    public_send(getter_name)
+    if by_callback
+      unauthorized_entity unless public_send(getter_name)
+    else
+      public_send(getter_name)
+    end
   end
 
   private
@@ -15,7 +19,7 @@ module Knock::Authenticable
     prefix, entity_name = method.to_s.split('_', 2)
     case prefix
     when 'authenticate'
-      unauthorized_entity(entity_name) unless authenticate_entity(entity_name)
+      unauthorized_entity unless authenticate_entity(entity_name)
     when 'current'
       authenticate_entity(entity_name)
     else
@@ -26,11 +30,11 @@ module Knock::Authenticable
   def authenticate_entity(entity_name)
     if token
       entity_class = entity_name.camelize.constantize
-      send(:authenticate_for, entity_class)
+      send(:authenticate_for, entity_class, by_callback: false)
     end
   end
 
-  def unauthorized_entity(entity_name)
+  def unauthorized_entity
     head(:unauthorized)
   end
 
