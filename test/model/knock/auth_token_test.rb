@@ -120,5 +120,15 @@ module Knock
 
       assert_equal("{\"jwt\":\"#{@token}\"}", auth_token.to_json)
     end
+
+    test "returns the correct payload when token_lifetime is an integer" do
+      lifespan = 7.days
+
+      Knock.token_lifetime = lifespan
+
+      auth_token = AuthToken.new(entity_class: AuthToken)
+
+      assert auth_token.payload[:exp], lifespan.from_now.to_i
+    end
   end
 end

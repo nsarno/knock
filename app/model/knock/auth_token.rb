@@ -4,8 +4,9 @@ module Knock
   class AuthToken
     attr_reader :token
     attr_reader :payload
+    attr_reader :entity_class
 
-    def initialize(payload: {}, token: nil, verify_options: {})
+    def initialize(payload: {}, token: nil, verify_options: {}, entity_class: nil)
       if token.present?
         @payload, _ = JWT.decode token.to_s, decode_key, true, options.merge(verify_options)
         @token = token
@@ -15,13 +16,14 @@ module Knock
                             secret_key,
                             Knock.token_signature_algorithm
       end
+      @entity_class = entity_class
     end
 
-    def entity_for(entity_class)
-      if entity_class.respond_to? :from_token_payload
-        entity_class.from_token_payload @payload
+    def entity_for(entity_klass)
+      if entity_klass.respond_to? :from_token_payload
+        entity_klass.from_token_payload @payload
       else
-        entity_class.find @payload["sub"]
+        entity_klass.find @payload["sub"]
       end
     end
 
