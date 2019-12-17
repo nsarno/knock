@@ -4,9 +4,10 @@ module Knock
   class AuthToken
     attr_reader :token
     attr_reader :payload
-    attr_reader :entity_class
+    attr_reader :entity_class_name
 
-    def initialize(payload: {}, token: nil, verify_options: {}, entity_class: nil)
+    def initialize(payload: {}, token: nil, verify_options: {}, entity_class_name: nil)
+      @entity_class_name = entity_class_name
       if token.present?
         @payload, _ = JWT.decode token.to_s, decode_key, true, options.merge(verify_options)
         @token = token
@@ -16,14 +17,13 @@ module Knock
                             secret_key,
                             Knock.token_signature_algorithm
       end
-      @entity_class = entity_class
     end
 
-    def entity_for(entity_klass)
-      if entity_klass.respond_to? :from_token_payload
-        entity_klass.from_token_payload @payload
+    def entity_for(entity_class)
+      if entity_class.respond_to? :from_token_payload
+        entity_class.from_token_payload @payload
       else
-        entity_klass.find @payload["sub"]
+        entity_class.find @payload["sub"]
       end
     end
 
@@ -58,7 +58,7 @@ module Knock
       return unless verify_lifetime?
 
       if Knock.token_lifetime.is_a?(Hash)
-        Knock.token_lifetime[entity_class.to_s.parameterize.underscore.to_sym].from_now.to_i
+        Knock.token_lifetime[entity_class_name].from_now.to_i
       else
         Knock.token_lifetime.from_now.to_i
       end
