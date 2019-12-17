@@ -18,4 +18,6 @@ gem "simplecov", require: false, group: :test
 group :development do
   gem "bundler"
   gem "rake"
+  gem "pry"
+  gem "pry-nav"
 end
