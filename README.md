@@ -196,8 +196,7 @@ setting the desired lifetime:
 E.g.
 
 ```ruby
-mattr_accessor :token_lifetime
-self.token_lifetime = 3.hours
+  Knock.token_lifetime = 3.hours
 ```
 
 If you are generating tokens for more than one entity, you can pass
@@ -208,8 +207,7 @@ E.g.
 ```ruby
   # How long before a token is expired. If nil is provided,
   # token will last forever.
-  mattr_accessor :token_lifetime
-  self.token_lifetime = {
+  Knock.token_lifetime = {
     user: 1.day
     admin: 30.minutes
   }
