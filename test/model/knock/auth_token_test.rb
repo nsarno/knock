@@ -121,7 +121,7 @@ module Knock
       assert_equal("{\"jwt\":\"#{@token}\"}", auth_token.to_json)
     end
 
-    test "returns the correct payload when token_lifetime is an integer" do
+    test "returns the correct payload expiration value when token_lifetime is an integer" do
       lifespan = 7.days
 
       Knock.token_lifetime = lifespan
@@ -131,7 +131,7 @@ module Knock
       assert auth_token.payload[:exp], lifespan.from_now.to_i
     end
 
-    test "returns the correct payload when token_lifetime is a hash (default user)" do
+    test "returns the correct payload expiration value when token_lifetime is a hash for default user" do
       user_lifespan = 7.days
       admin_lifespan = 1.hour
 
@@ -145,7 +145,7 @@ module Knock
       assert auth_token.payload[:exp], user_lifespan.from_now.to_i
     end
 
-    test "returns the correct payload when token_lifetime is a hash (superuser)" do
+    test "returns the correct payload expiration value when token_lifetime is a hash for superuser" do
       user_lifespan = 7.days
       admin_lifespan = 1.hour
 
