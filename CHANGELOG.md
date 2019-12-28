@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Fixed
+- Require `rails/generators` in custom generators to fix `uninitialized constant Generators::Base`
+
 ## [2.1.1] - 2017-02-11
 ### Fixed
 - Stop trying to retrieve user from empty payload when no token is given
