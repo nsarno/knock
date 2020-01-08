@@ -5,6 +5,14 @@ module Knock::Authenticable
     public_send(getter_name)
   end
 
+  def set_authenticate_for entity_class
+    unauthorized_entity(entity_class.to_s) unless authenticate_for entity_class
+  end
+
+  def set_soft_authenticate_for entity_class
+    authenticate_for entity_class
+  end
+
   private
 
   def token
@@ -12,11 +20,16 @@ module Knock::Authenticable
   end
 
   def method_missing(method, *args)
-    prefix, entity_name = method.to_s.split('_', 2)
+    values = method.to_s.split('_', 3)
+    if (values.size) == 3 && ("#{values.first}_#{values.second}" == 'soft_authenticate')
+      prefix, entity_name = 'soft_authenticate', values.last
+    else
+      prefix, entity_name = method.to_s.split('_', 2)
+    end
     case prefix
     when 'authenticate'
       unauthorized_entity(entity_name) unless authenticate_entity(entity_name)
-    when 'current'
+    when 'current', 'soft_authenticate'
       authenticate_entity(entity_name)
     else
       super
