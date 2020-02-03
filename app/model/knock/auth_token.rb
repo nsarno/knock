@@ -4,8 +4,10 @@ module Knock
   class AuthToken
     attr_reader :token
     attr_reader :payload
+    attr_reader :entity_class_name
 
-    def initialize(payload: {}, token: nil, verify_options: {})
+    def initialize(payload: {}, token: nil, verify_options: {}, entity_class_name: nil)
+      @entity_class_name = entity_class_name
       if token.present?
         @payload, _ = JWT.decode token.to_s, decode_key, true, options.merge(verify_options)
         @token = token
@@ -53,7 +55,13 @@ module Knock
     end
 
     def token_lifetime
-      Knock.token_lifetime.from_now.to_i if verify_lifetime?
+      return unless verify_lifetime?
+
+      if Knock.token_lifetime.is_a?(Hash)
+        Knock.token_lifetime[entity_class_name].from_now.to_i
+      else
+        Knock.token_lifetime.from_now.to_i
+      end
     end
 
     def verify_lifetime?
