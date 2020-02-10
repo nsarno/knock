@@ -24,9 +24,13 @@ module Knock
         entity_class.find @payload['sub']
       end
     end
+    
+    def as_json
+      { jwt: @token }
+    end
 
     def to_json options = {}
-      {jwt: @token}.to_json
+      as_json.to_json
     end
 
   private

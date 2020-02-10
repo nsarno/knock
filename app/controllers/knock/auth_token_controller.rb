@@ -8,7 +8,7 @@ module Knock
       render json: auth_token, status: :created
     end
 
-  private
+  protected
     def authenticate
       unless entity.present? && entity.authenticate(auth_params[:password])
         raise Knock.not_found_exception_class
