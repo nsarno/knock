@@ -1,35 +1,38 @@
-require 'jwt'
+require "jwt"
 
 module Knock
   class AuthToken
     attr_reader :token
     attr_reader :payload
+    attr_reader :entity_class_name
 
-    def initialize payload: {}, token: nil, verify_options: {}
+    def initialize(payload: {}, token: nil, verify_options: {}, entity_class_name: nil)
+      @entity_class_name = entity_class_name
       if token.present?
         @payload, _ = JWT.decode token.to_s, decode_key, true, options.merge(verify_options)
         @token = token
       else
         @payload = claims.merge(payload)
         @token = JWT.encode @payload,
-          secret_key,
-          Knock.token_signature_algorithm
+                            secret_key,
+                            Knock.token_signature_algorithm
       end
     end
 
-    def entity_for entity_class
+    def entity_for(entity_class)
       if entity_class.respond_to? :from_token_payload
         entity_class.from_token_payload @payload
       else
-        entity_class.find @payload['sub']
+        entity_class.find @payload["sub"]
       end
     end
 
-    def to_json options = {}
-      {jwt: @token}.to_json
+    def to_json(options = {})
+      { jwt: @token }.to_json
     end
 
-  private
+    private
+
     def secret_key
       Knock.token_secret_signature_key.call
     end
@@ -40,7 +43,7 @@ module Knock
 
     def options
       verify_claims.merge({
-        algorithm: Knock.token_signature_algorithm
+        algorithm: Knock.token_signature_algorithm,
       })
     end
 
@@ -52,7 +55,13 @@ module Knock
     end
 
     def token_lifetime
-      Knock.token_lifetime.from_now.to_i if verify_lifetime?
+      return unless verify_lifetime?
+
+      if Knock.token_lifetime.is_a?(Hash)
+        Knock.token_lifetime[entity_class_name].from_now.to_i
+      else
+        Knock.token_lifetime.from_now.to_i
+      end
     end
 
     def verify_lifetime?
@@ -63,7 +72,7 @@ module Knock
       {
         aud: token_audience,
         verify_aud: verify_audience?,
-        verify_expiration: verify_lifetime?
+        verify_expiration: verify_lifetime?,
       }
     end
 

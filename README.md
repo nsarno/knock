@@ -15,7 +15,7 @@ Knock is an authentication solution for Rails API-only application based on JSON
 - It's lightweight.
 - It's tailored for Rails API-only application.
 - It's [stateless](https://en.wikipedia.org/wiki/Representational_state_transfer#Statelessness).
-- It works out of the box with [Auth0](https://auth0.com/docs/server-apis/rails).
+- It works out of the box with services like [Auth0](http://auth0.com/)
 
 ### Is this being maintained?
 
@@ -38,20 +38,6 @@ gem 'knock'
 Then execute:
 
     $ bundle install
-
-Finally, run the install generator:
-
-    $ rails generate knock:install
-
-It will create the following initializer `config/initializers/knock.rb`.
-This file contains all of the existing configuration options.
-
-If you don't use an external authentication solution like Auth0, you also need to provide a way for users to sign in:
-
-    $ rails generate knock:token_controller user
-
-This will generate the controller `user_token_controller.rb` and add the required route to your `config/routes.rb` file.
-You can also provide another entity instead of `user`. E.g. `admin`
 
 ### Requirements
 
@@ -140,9 +126,9 @@ end
 
 Then you get the current user by calling `current_v1_user` instead of `current_user`.
 
-### Customization
+### Configuration
 
-#### Via the entity model
+#### In the entity model
 
 The entity model (e.g. `User`) can implement specific methods to provide
 customization over different parts of the authentication process.
@@ -201,11 +187,49 @@ class User < ActiveRecord::Base
 end
 ```
 
-#### Via the initializer
+- **Token Lifetime**
 
-The initializer [config/initializers/knock.rb](https://github.com/nsarno/knock/blob/master/lib/generators/templates/knock.rb)
-is generated when `rails g knock:install` is executed. Each configuration variable is
-documented with comments in the initializer itself.
+By default the generated tokens will be valid, after generated, for 1 day.
+You can change it in the Knock configuration file (config/knock.rb),
+setting the desired lifetime:
+
+E.g.
+
+```ruby
+  Knock.token_lifetime = 3.hours
+```
+
+If you are generating tokens for more than one entity, you can pass
+each lifetime in a hash, using the entities class names as keys, like:
+
+E.g.
+
+```ruby
+  # How long before a token is expired. If nil is provided,
+  # token will last forever.
+  Knock.token_lifetime = {
+    user: 1.day
+    admin: 30.minutes
+  }
+```
+
+#### In the initializer
+
+Read [lib/knock.rb](https://github.com/nsarno/knock/blob/master/lib/knock.rb) to learn about all the possible configuration options and their default values.
+
+You can create an initializer like in the example below:
+
+Inside `config/initializers/knock.rb`
+
+```ruby
+Knock.setup do |config|
+  config.token_lifetime = 1.hour
+
+  # For Auth0
+  config.token_audience = -> { Rails.application.secrets.auth0_client_id }
+  config.token_secret_signature_key = -> { JWT.base64url_decode Rails.application.secrets.auth0_client_secret }
+end
+```
 
 ### Authenticating from a web or mobile application
 
