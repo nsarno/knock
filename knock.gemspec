@@ -1,15 +1,14 @@
 $:.push File.expand_path("../lib", __FILE__)
 
-# Maintain your gem's version:
 require "knock/version"
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
   s.name = "knock"
   s.version = Knock::Version::VERSION
-  s.authors = ["Arnaud MESUREUR", "Ghjuvan-Carlu BIANCHI"]
-  s.email = ["arnaud.mesureur@gmail.com"]
-  s.homepage = "https://github.com/nsarno/knock"
+  s.authors = [""]
+  s.email = [""]
+  s.homepage = "https://github.com/ipoval/knock"
   s.summary = "Seamless JWT authentication for Rails API."
   s.description = "Authentication solution for Rails based on JWT"
   s.license = "MIT"
