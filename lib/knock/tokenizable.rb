@@ -4,7 +4,7 @@ module Knock
   # for token serialization and deserialization.
   module Tokenizable
     def self.included(base)
-      base.extends ClassMethods
+      base.extend ClassMethods
     end
 
     module ClassMethods
