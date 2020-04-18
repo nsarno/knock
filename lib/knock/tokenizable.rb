@@ -19,7 +19,7 @@ module Knock
     end
 
     def to_token_payload
-      { sub: @object.id }
+      { sub: id }
     end
 
     def to_token
