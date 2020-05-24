@@ -16,8 +16,18 @@ module Knock
   self.token_signature_algorithm = "HS256"
 
   # Configure the key used to sign tokens.
-  mattr_accessor :token_secret_signature_key
-  self.token_secret_signature_key = -> { Rails.application.secrets.secret_key_base }
+  mattr_writer :token_secret_signature_key, default: -> { Rails.application.secrets.secret_key_base }
+
+  class EmptySecretKey < StandardError
+    def initialize(msg="Knock secret signature key can't be empty")
+      super
+    end
+  end
+
+  def self.token_secret_signature_key
+    raise EmptySecretKey unless @@token_secret_signature_key
+    @@token_secret_signature_key
+  end
 
   # Configure the public key used to decode tokens, when required.
   mattr_accessor :token_public_key
