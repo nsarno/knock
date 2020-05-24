@@ -15,6 +15,12 @@ class ProtectedResourcesControllerTest < ActionController::TestCase
     assert_response :unauthorized
   end
 
+  test "responds with unauthorized with empty token in header" do
+    authenticate token: ""
+    get :index
+    assert_response :unauthorized
+  end
+
   test "responds with success with valid token in header" do
     authenticate
     get :index
