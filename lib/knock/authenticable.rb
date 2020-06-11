@@ -9,7 +9,7 @@ module Knock
   # the token payload.
   module Authenticable
     def authenticate_for(entity_class)
-      getter_name = "current_#{entity_class.to_s.parameterize.underscore}"
+      getter_name = GetterName.new(entity_class).cleared
       define_current_entity_getter(entity_class, getter_name)
       public_send(getter_name)
     end
