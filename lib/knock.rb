@@ -17,7 +17,13 @@ module Knock
 
   # Configure the key used to sign tokens.
   mattr_accessor :token_secret_signature_key
-  self.token_secret_signature_key = -> { Rails.application.secrets.secret_key_base }
+  self.token_secret_signature_key = -> do
+    if Rails.application.respond_to?(:secret_key_base)
+      Rails.application.secret_key_base
+    else
+      Rails.application.secrets.secret_key_base
+    end
+  end
 
   # Configure the public key used to decode tokens, when required.
   mattr_accessor :token_public_key
