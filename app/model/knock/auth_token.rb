@@ -65,7 +65,8 @@ module Knock
     end
 
     def verify_lifetime?
-      !Knock.token_lifetime.nil?
+      token_lifetime = Knock.token_lifetime
+      !token_lifetime.nil? && (!token_lifetime.is_a?(Hash) || !token_lifetime[entity_class_name].nil?)
     end
 
     def verify_claims

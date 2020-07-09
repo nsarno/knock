@@ -157,5 +157,18 @@ module Knock
 
       assert auth_token.payload[:exp], admin_lifespan.from_now.to_i
     end
+
+    test "returns the correct payload expiration value when token_lifetime is a hash with a nil value" do
+      user_lifespan = 7.days
+      admin_lifespan = nil
+
+      Knock.token_lifetime = {
+        user: user_lifespan,
+        admin: admin_lifespan
+      }
+      auth_token = Knock::AuthToken.new(entity_class_name: :admin)
+
+      assert_not auth_token.payload.has_key?(:exp)
+    end
   end
 end
