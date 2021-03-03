@@ -10,20 +10,11 @@ Seamless JWT authentication for Rails API
 
 Knock is an authentication solution for Rails API-only application based on JSON Web Tokens.
 
-### Why should I use this?
+## DISCLAIMER
 
-- It's lightweight.
-- It's tailored for Rails API-only application.
-- It's [stateless](https://en.wikipedia.org/wiki/Representational_state_transfer#Statelessness).
-- It works out of the box with services like [Auth0](http://auth0.com/)
+This project is not being maintained and I don't recommend using it in its current form.
 
-### Is this being maintained?
-
-~~Yes~~ ~~No~~ Yes!
-
-Currently being maintained with the help of @andrerpbts ❤️
-
-Slowly moving through the backlog of issues & PRs and starting to build a roadmap for the next version.
+As an alternative, I recommend using the [jwt](https://github.com/jwt/ruby-jwt) gem directly.
 
 ## Getting Started
 
