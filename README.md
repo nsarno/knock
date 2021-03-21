@@ -1,3 +1,8 @@
+## DISCLAIMER
+
+This project is not being maintained and I don't recommend using it in its current form.
+As an alternative, I recommend using the [jwt](https://github.com/jwt/ruby-jwt) gem directly.
+
 # knock
 
 [![Gem Version](https://badge.fury.io/rb/knock.svg)](http://badge.fury.io/rb/knock)
@@ -9,12 +14,6 @@ Seamless JWT authentication for Rails API
 ## Description
 
 Knock is an authentication solution for Rails API-only application based on JSON Web Tokens.
-
-## DISCLAIMER
-
-This project is not being maintained and I don't recommend using it in its current form.
-
-As an alternative, I recommend using the [jwt](https://github.com/jwt/ruby-jwt) gem directly.
 
 ## Getting Started
 
