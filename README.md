@@ -303,7 +303,12 @@ You can specify any of the algorithms supported by the
 [jwt](https://github.com/jwt/ruby-jwt) gem.
 
 If the algorithm you use requires a public key, you also need to set
-`token_public_key` in the initializer.
+`token_public_key` in the initializer:
+```
+# example for RS256
+config.token_signature_algorithm = 'RS256'
+config.token_public_key = OpenSSL::PKey::RSA.new File.read(File.join(Rails.root, 'public_key.pem'))
+```
 
 ## CORS
 
